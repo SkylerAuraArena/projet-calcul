@@ -1,15 +1,11 @@
-import { FC, ReactElement } from 'react';
+import { FC } from 'react'
+import { IButtonProps } from '../helpers/interfacesHelpers'
 
-type ButtonProps = {
-    title: string,
-    color: string,
-}
-
-const Button: FC<ButtonProps> = ({title, color}): ReactElement => {
-
+const Button: FC<IButtonProps> = ({ title, color}) => {
+    
     const css = `w-full px-4 py-4 ${color} rounded text-white text-center text-2xl`
 
-    return(
+    return (
         <button className={css}>{title}</button>
     )
 }
