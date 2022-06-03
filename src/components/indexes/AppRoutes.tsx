@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import { IEmptyProps as IAppRoutesProps } from '../helpers/interfacesHelpers'
 import App from "../../App";
 import AuthRoute from "../access/AuthRoute";
 import DisconnectedRoute from "../access/DisconnectedRoute";
+import Homepage from "../pages/Homepage";
+import LandingPage from "../pages/LandingPage";
+import ErrorPage from "../pages/ErrorPage";
 // import ConfidentialityPoliticsPage from "../../pages/ConfidentialityPoliticsPage";
 // import Error404 from "../../pages/ErrorPage";
 // import Friends from "../../pages/FriendsPage";
@@ -12,10 +14,11 @@ import DisconnectedRoute from "../access/DisconnectedRoute";
 // import SignAndLogPage from "../../pages/SignAndLogPage";
 // import Wishes from "../../pages/WishesPage";
 
-const AppRoutes: FC<IAppRoutesProps> = () => {
+const AppRoutes: FC = () => {
 
     const UnprotectedPages = (
         <>
+            <Route index element={<LandingPage />} />
             {/* <Route index element={<LandingPage />} />
             <Route path="login" element={<SignAndLogPage type="log" />} />
             <Route path="signup" element={<SignAndLogPage type="sign" />} />
@@ -24,6 +27,7 @@ const AppRoutes: FC<IAppRoutesProps> = () => {
     )
     const RestrictedAccessPages = (
         <>
+            <Route path="home" element={<Homepage />} />
             {/* <Route path="home" element={<LandingPage />} />
             <Route path="friends" element={<Friends />} />
             <Route path="profile" element={<ProfilePage />} />
@@ -55,7 +59,7 @@ const AppRoutes: FC<IAppRoutesProps> = () => {
                 >
                     {RestrictedAccessPages}
                 </Route>
-                {/* <Route path="*" element={<Error404 />} /> */}
+                <Route path="*" element={<ErrorPage />} />
             </Route>
         </Routes>
     )

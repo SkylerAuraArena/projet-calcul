@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 
 export interface IAuthContextProps extends IChildrenProps {
     currentUser: User | null,
@@ -12,12 +12,15 @@ export interface IAuthContextProps extends IChildrenProps {
 }
 
 export interface IButtonProps {
-    title: string,
-    color: string,
+    get title(): string 
+    get color() : string
 }
 
 export interface IChildrenProps {
-    children?: ReactNode,
+    children?: ReactElement,
 }
 
-export interface IEmptyProps {}
+export interface ICurrentUserProps extends User {
+    // photo: string,
+    // date: string,
+}

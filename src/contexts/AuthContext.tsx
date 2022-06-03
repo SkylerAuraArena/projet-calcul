@@ -1,27 +1,29 @@
 import { useState, useEffect, createContext, useContext, useMemo, useCallback, FC } from "react";
-import { IAuthContextProps } from '../components/helpers/interfacesHelpers'
+import { IChildrenProps, IAuthContextProps, ICurrentUserProps } from '../components/helpers/interfacesHelpers'
 import { auth } from "../firebase-confg";
-import { User, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 
 const AuthContext = createContext<IAuthContextProps | null>(null)
 
-const AuthContextProvider: FC<IAuthContextProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
+const AuthContextProvider: FC<IChildrenProps> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<ICurrentUserProps | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
-  // useEffect(() => {
-  //   AuthCheck()
-  // }, [auth])
+  useEffect(() => {
+    AuthCheck()
+  }, [auth])
   
-  // const AuthCheck = onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //       setCurrentUser({
-  //         user: user,
-  //       });
-  //     } else {
-  //       setCurrentUser(user);
-  //     }
-  // })
+  const AuthCheck = onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // const photo: string = "Photo"
+        // const date: string = "Photo"
+        // const newUser: ICurrentUserProps = {...user, photo, date}
+        const newUser: ICurrentUserProps = {...user}
+        setCurrentUser(newUser);
+      } else {
+        setCurrentUser(user);
+      }
+  })
 
 //   useEffect(() => {
 //     const unsuscribe = onAuthStateChanged(auth, (user) => {

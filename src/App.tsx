@@ -1,10 +1,9 @@
-import Homepage from "./components/pages/Homepage"
+import { Outlet } from "react-router-dom"
 
 function App() {
-
   return (
     <div className="min-h-screen w-full flexJIC">
-      <Homepage />
+        <Outlet />
     </div>
   )
 }
