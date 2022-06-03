@@ -1,37 +1,27 @@
-import { useState, useEffect, createContext, useContext, useMemo, useCallback, ReactNode } from "react";
+import { useState, useEffect, createContext, useContext, useMemo, useCallback, FC } from "react";
+import { IAuthContextProps } from '../components/helpers/interfacesHelpers'
 import { auth } from "../firebase-confg";
-import { onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { User, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 
-const AuthContext = createContext({
-  currentUser: null,
-  signup: () => Promise,
-  login: () => Promise,
-  logout: () => Promise,
-  signInWithGoogle: () => Promise,
-  signInWithFacebook: () => Promise,
-})
+const AuthContext = createContext<IAuthContextProps | null>(null)
 
-export interface IAuthContextProviderProps{
-    children?: ReactNode
-}
+const AuthContextProvider: FC<IAuthContextProps> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
-export default function AuthContextProvider({children} : IAuthContextProviderProps) {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    AuthCheck()
-  }, [auth])
+  // useEffect(() => {
+  //   AuthCheck()
+  // }, [auth])
   
-  const AuthCheck = onAuthStateChanged(auth, (user) => {
-    if (user) {
-        setCurrentUser({
-          user: user,
-        });
-      } else {
-        setCurrentUser(user);
-      }
-  })
+  // const AuthCheck = onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //       setCurrentUser({
+  //         user: user,
+  //       });
+  //     } else {
+  //       setCurrentUser(user);
+  //     }
+  // })
 
 //   useEffect(() => {
 //     const unsuscribe = onAuthStateChanged(auth, (user) => {
@@ -49,7 +39,7 @@ export default function AuthContextProvider({children} : IAuthContextProviderPro
 //     }
 //   }, [])
 
-  const value = useMemo(
+  const contextValues: IAuthContextProps = useMemo(
     () => ({
       currentUser,
       loading,
@@ -61,8 +51,10 @@ export default function AuthContextProvider({children} : IAuthContextProviderPro
     ]
   )
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>
 }
+
+export default AuthContextProvider
 
 // export default function AuthContextProvider({ children }) {
 //   const [currentUser, setCurrentUser] = useState(null);

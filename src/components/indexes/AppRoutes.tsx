@@ -21,7 +21,7 @@ const AppRoutes: FC<IAppRoutesProps> = () => {
             <Route path="signup" element={<SignAndLogPage type="sign" />} />
             <Route path="dataProtectionDisconnected" element={<ConfidentialityPoliticsPage />} /> */}
         </>
-    );
+    )
     const RestrictedAccessPages = (
         <>
             {/* <Route path="home" element={<LandingPage />} />
@@ -30,7 +30,7 @@ const AppRoutes: FC<IAppRoutesProps> = () => {
             <Route path="wishes" element={<Wishes />} />
             <Route path="dataProtectionLoggedIn" element={<ConfidentialityPoliticsPage />} /> */}
         </>
-    );
+    )
 
     return (
         <Routes>
