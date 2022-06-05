@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { IButtonProps } from '../helpers/interfacesHelpers'
 
-const Button: FC<IButtonProps> = ({ title, color}) => {
+const Button: FC<IButtonProps> = ({ title, color, func}) => {
     
-    const css = `w-full px-4 py-4 ${color} rounded text-white text-center text-2xl`
+    const css = `btn ${color}`
 
     return (
-        <button className={css}>{title}</button>
+        <button className={css} onClick={()=>func()}>{title}</button>
     )
 }
 

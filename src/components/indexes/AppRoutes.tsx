@@ -6,8 +6,6 @@ import DisconnectedRoute from "../access/DisconnectedRoute";
 import Homepage from "../pages/Homepage";
 import LandingPage from "../pages/LandingPage";
 import ErrorPage from "../pages/ErrorPage";
-// import ConfidentialityPoliticsPage from "../../pages/ConfidentialityPoliticsPage";
-// import Error404 from "../../pages/ErrorPage";
 // import Friends from "../../pages/FriendsPage";
 // import LandingPage from "../../pages/LandingPage";
 // import ProfilePage from "../../pages/ProfilePage";
@@ -19,20 +17,20 @@ const AppRoutes: FC = () => {
     const UnprotectedPages = (
         <>
             <Route index element={<LandingPage />} />
-            {/* <Route index element={<LandingPage />} />
+            {/*
             <Route path="login" element={<SignAndLogPage type="log" />} />
             <Route path="signup" element={<SignAndLogPage type="sign" />} />
-            <Route path="dataProtectionDisconnected" element={<ConfidentialityPoliticsPage />} /> */}
+            */}
         </>
     )
     const RestrictedAccessPages = (
         <>
-            <Route path="home" element={<Homepage />} />
-            {/* <Route path="home" element={<LandingPage />} />
+            <Route path="accueil" element={<Homepage />} />
+            {/*
             <Route path="friends" element={<Friends />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="wishes" element={<Wishes />} />
-            <Route path="dataProtectionLoggedIn" element={<ConfidentialityPoliticsPage />} /> */}
+            */}
         </>
     )
 

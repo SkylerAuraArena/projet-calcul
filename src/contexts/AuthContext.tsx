@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext, useContext, useMemo, useCallback, FC } from "react";
 import { IChildrenProps, IAuthContextProps, ICurrentUserProps } from '../components/helpers/interfacesHelpers'
 import { auth } from "../firebase-confg";
-import { onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const AuthContext = createContext<IAuthContextProps | null>(null)
 
@@ -10,10 +10,14 @@ const AuthContextProvider: FC<IChildrenProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    AuthCheck()
+    authCheck()
+
+    return () => {
+      authCheck
+    }
   }, [auth])
   
-  const AuthCheck = onAuthStateChanged(auth, (user) => {
+  const authCheck = onAuthStateChanged(auth, (user) => {
     if (user) {
         // const photo: string = "Photo"
         // const date: string = "Photo"
@@ -25,27 +29,22 @@ const AuthContextProvider: FC<IChildrenProps> = ({ children }) => {
       }
   })
 
-//   useEffect(() => {
-//     const unsuscribe = onAuthStateChanged(auth, (user) => {
-//       if (user) {
-//         setCurrentUser({
-//           user: user,
-//         });
-//       } else {
-//         setCurrentUser(user);
-//       }
-//     })
+  const signInWithGoogle = useCallback(() => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  }, []);
 
-//     return () => {
-//       unsuscribe()
-//     }
-//   }, [])
+  const logout = useCallback(() => {
+    return signOut(auth);
+  }, []);
 
   const contextValues: IAuthContextProps = useMemo(
     () => ({
       currentUser,
       loading,
       setLoading,
+      signInWithGoogle,
+      logout,
     }),
     [
       currentUser,
@@ -133,5 +132,13 @@ export default AuthContextProvider
 //   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 // }
 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error(
+      "useAuth doit être utilisé dans le context adéquat"
+    );
+  }
 
-export const useAuth = () => useContext(AuthContext);
+  return context;
+};
