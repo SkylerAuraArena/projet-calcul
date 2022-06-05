@@ -1,7 +1,13 @@
-import { useState, useEffect, createContext, useContext, useMemo, useCallback, FC } from "react";
+import { useState, useEffect, createContext, useContext, useMemo, useCallback, FC } from "react"
 import { IChildrenProps, IAuthContextProps, ICurrentUserProps } from '../components/helpers/interfacesHelpers'
-import { auth } from "../firebase-confg";
-import { onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../firebase-confg"
+import { onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth"
+import {
+  setDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "../firebase-confg"
 
 const AuthContext = createContext<IAuthContextProps | null>(null)
 
@@ -23,20 +29,32 @@ const AuthContextProvider: FC<IChildrenProps> = ({ children }) => {
         // const date: string = "Photo"
         // const newUser: ICurrentUserProps = {...user, photo, date}
         const newUser: ICurrentUserProps = {...user}
-        setCurrentUser(newUser);
+        setCurrentUser(newUser)
       } else {
-        setCurrentUser(user);
+        setCurrentUser(user)
       }
   })
 
   const signInWithGoogle = useCallback(() => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  }, []);
+    const provider = new GoogleAuthProvider()
+    return signInWithPopup(auth, provider)
+  }, [])
 
   const logout = useCallback(() => {
-    return signOut(auth);
-  }, []);
+    return signOut(auth)
+  }, [])
+
+  const ifNewCreateUserInFirestoreDatabase = async (cred : UserCredential) => {
+    const userRef = doc(db, "users", cred.user.uid)
+    const userDoc = await getDoc(userRef)
+    if (!userDoc.exists()) {
+      //If it doesn't exist yet, we create the user in the database
+      setDoc(userRef, {
+        pseudo: cred.user.displayName,
+        email: cred.user.email,
+      })
+    }
+  }
 
   const contextValues: IAuthContextProps = useMemo(
     () => ({
@@ -45,6 +63,7 @@ const AuthContextProvider: FC<IChildrenProps> = ({ children }) => {
       setLoading,
       signInWithGoogle,
       logout,
+      ifNewCreateUserInFirestoreDatabase,
     }),
     [
       currentUser,
@@ -133,12 +152,12 @@ export default AuthContextProvider
 // }
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (!context) {
     throw new Error(
       "useAuth doit être utilisé dans le context adéquat"
-    );
+    )
   }
 
-  return context;
-};
+  return context
+}

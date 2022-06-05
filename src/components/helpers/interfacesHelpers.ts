@@ -9,6 +9,7 @@ export interface IAuthContextProps extends IChildrenProps {
     logout: () => Promise<void>,
     signInWithGoogle: () => Promise<UserCredential>,
     signInWithFacebook?: () => Promise<UserCredential>,
+    ifNewCreateUserInFirestoreDatabase: (cred : UserCredential) => Promise<void>,
 }
 
 export interface IButtonProps {
@@ -24,4 +25,8 @@ export interface IChildrenProps {
 export interface ICurrentUserProps extends User {
     // photo: string,
     // date: string,
+}
+
+export interface ILoginProps {
+    get withWhat(): string
 }

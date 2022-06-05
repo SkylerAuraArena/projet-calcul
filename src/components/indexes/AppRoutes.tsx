@@ -4,7 +4,7 @@ import App from "../../App";
 import AuthRoute from "../access/AuthRoute";
 import DisconnectedRoute from "../access/DisconnectedRoute";
 import Homepage from "../pages/Homepage";
-import LandingPage from "../pages/LandingPage";
+import LoginPage from "../pages/LoginPage";
 import ErrorPage from "../pages/ErrorPage";
 // import Friends from "../../pages/FriendsPage";
 // import LandingPage from "../../pages/LandingPage";
@@ -16,7 +16,7 @@ const AppRoutes: FC = () => {
 
     const UnprotectedPages = (
         <>
-            <Route index element={<LandingPage />} />
+            <Route index element={<LoginPage />} />
             {/*
             <Route path="login" element={<SignAndLogPage type="log" />} />
             <Route path="signup" element={<SignAndLogPage type="sign" />} />
