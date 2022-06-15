@@ -1,5 +1,5 @@
 import { User, UserCredential } from "firebase/auth";
-import { Dispatch, ForwardRefExoticComponent, ReactElement, RefAttributes, SetStateAction } from "react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 
 export interface IAuthContextProps extends IChildrenProps {
     get currentUser(): User | null
@@ -14,6 +14,7 @@ export interface IAuthContextProps extends IChildrenProps {
 }
 
 export interface IButtonProps {
+    to?: string
     get title(): string 
     get color() : string
     get func(): () => void
@@ -31,4 +32,10 @@ export interface ICurrentUserProps extends User {
 export interface ILoginProps {
     get withWhat(): string
     get setAuthing(): Dispatch<SetStateAction<boolean>>
+}
+
+export interface IHomePageNavLinkProps {
+    get to(): string |undefined
+    get title(): string
+    get css(): string
 }
