@@ -1,9 +1,10 @@
 import { User, UserCredential } from "firebase/auth";
-import { ReactElement } from "react";
+import { Dispatch, ForwardRefExoticComponent, ReactElement, RefAttributes, SetStateAction } from "react";
 
 export interface IAuthContextProps extends IChildrenProps {
-    currentUser: User | null,
-    loading: boolean,
+    get currentUser(): User | null
+    get loading(): boolean
+    get setLoading(): Dispatch<SetStateAction<boolean>>
     signup?: () => PromiseConstructor,
     login?: () => Promise<UserCredential>,
     logout: () => Promise<void>,
@@ -19,7 +20,7 @@ export interface IButtonProps {
 }
 
 export interface IChildrenProps {
-    children?: ReactElement,
+    children?: ReactElement
 }
 
 export interface ICurrentUserProps extends User {
@@ -29,4 +30,5 @@ export interface ICurrentUserProps extends User {
 
 export interface ILoginProps {
     get withWhat(): string
+    get setAuthing(): Dispatch<SetStateAction<boolean>>
 }

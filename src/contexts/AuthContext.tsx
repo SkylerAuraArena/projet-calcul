@@ -2,11 +2,7 @@ import { useState, useEffect, createContext, useContext, useMemo, useCallback, F
 import { IChildrenProps, IAuthContextProps, ICurrentUserProps } from '../components/helpers/interfacesHelpers'
 import { auth } from "../firebase-confg"
 import { onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider, UserCredential } from "firebase/auth"
-import {
-  setDoc,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore"
 import { db } from "../firebase-confg"
 
 const AuthContext = createContext<IAuthContextProps | null>(null)
