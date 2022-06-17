@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 const Maths: FC = () => {
     return (
-        <div>
+        <div className='flexJIC flex-col gap-6'>
             Maths
         </div>
     )
