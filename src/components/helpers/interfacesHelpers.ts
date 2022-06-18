@@ -1,5 +1,5 @@
-import { User, UserCredential } from "firebase/auth";
-import { Dispatch, ReactElement, SetStateAction } from "react";
+import { User, UserCredential } from "firebase/auth"
+import { Dispatch, ReactElement, SetStateAction } from "react"
 
 export interface IAuthContextProps extends IChildrenProps {
     get currentUser(): User | null
@@ -17,7 +17,8 @@ export interface IButtonProps {
     to?: string
     get title(): string 
     get color() : string
-    get func(): () => void
+    func?: () => void
+    setter?: Dispatch<SetStateAction<string[]>>
 }
 
 export interface IChildrenProps {

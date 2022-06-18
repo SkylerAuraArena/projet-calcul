@@ -15,7 +15,7 @@ const SigninWith: FC<ILoginProps> = ({withWhat, setAuthing}) => {
     const cssBtn = 'flex justify-center w-[8.8rem] rounded px-9 py-4 border-2 border-ivory transition-all'
     const cssBtnFadeOut = 'opacity-0'
     const cssBtnFadeIn = 'opacity-100'
-    const cssBtnHover = 'hover:scale-110 cursor-pointer'
+    const cssBtnHover = 'transition'
     const cssBtnClicked = `bg-slate-400 cursor-not-allowed`
     let btnCss = `${cssBtn} ${cssBtnHover} ${cssBtnFadeOut}`
 

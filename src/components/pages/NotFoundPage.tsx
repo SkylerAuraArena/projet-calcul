@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-const ErrorPage: FC = () => {
+const NotFoundPage: FC = () => {
 
     return (
         <div className='w-full flexJIC flex-col gap-12'>
@@ -11,4 +11,4 @@ const ErrorPage: FC = () => {
     )
 }
 
-export default ErrorPage
+export default NotFoundPage

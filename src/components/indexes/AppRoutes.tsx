@@ -5,8 +5,8 @@ import AuthRoute from "../access/AuthRoute";
 import DisconnectedRoute from "../access/DisconnectedRoute";
 import Homepage from "../pages/Homepage";
 import LoginPage from "../pages/LoginPage";
-import ErrorPage from "../pages/ErrorPage";
-import Maths from "../pages/Maths";
+import NotFoundPage from "../pages/NotFoundPage";
+import MathsPage from "../pages/MathsPage";
 
 const AppRoutes: FC = () => {
 
@@ -18,7 +18,9 @@ const AppRoutes: FC = () => {
     const RestrictedAccessPages = (
         <>
             <Route path="accueil" element={<Homepage />} />
-            <Route path="maths" element={<Maths />} />
+            <Route path="maths" element={<MathsPage />} >
+                <Route path=":competence" element={<MathsPage />} />
+            </Route>
             <Route path="francais" element={<Homepage />} />
             <Route path="dactylo" element={<Homepage />} />
             <Route path="langues" element={<Homepage />} />
@@ -48,7 +50,7 @@ const AppRoutes: FC = () => {
                 >
                     {RestrictedAccessPages}
                 </Route>
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="*" element={<NotFoundPage />} />
             </Route>
         </Routes>
     )

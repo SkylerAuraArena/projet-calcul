@@ -4,7 +4,7 @@ import { IHomePageNavLinkProps } from "../../helpers/interfacesHelpers"
 
 const HomePageNavLink: FC<IHomePageNavLinkProps> = ({ to= "/", title = "Un navlink de de la HomePage", css = "" }) => {
 
-    const cssBtn = `btn ${css}`
+    const cssBtn = `btn ${css} transition`
     const direction = `/${to}`
 
     return(
