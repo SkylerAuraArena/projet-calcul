@@ -15,7 +15,7 @@ const LoginPage: FC = () => {
       return () => {
         setAuthing(false)
         setLoading(true)
-      };
+      }
     }, [])
 
     return (
