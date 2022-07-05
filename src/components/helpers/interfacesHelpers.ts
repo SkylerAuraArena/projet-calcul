@@ -36,7 +36,14 @@ export interface ILoginProps {
 }
 
 export interface IHomePageNavLinkProps {
-    get to(): string |undefined
+    get to(): string | null
     get title(): string
     get css(): string
+}
+
+export interface IMathsStateProps {
+    get mode(): string | null;
+    get target(): number | null;
+    get time(): number | null;
+    get spanMessage(): string | null;
 }

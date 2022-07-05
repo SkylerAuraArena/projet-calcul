@@ -9,11 +9,11 @@ import MathsTraining from '../parts/maths/MathsTraining'
 
 const MathsPage: FC = () => {
 
-    let navigate = useNavigate()
-    let location = useLocation()
-    let params = useParams()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const params = useParams()
     const [mathsState, setMathsState] = useState<Array<string>>(["Choisissez l'entraînement",""])
-    let navLinksList = mathsOptionsList.map(elt => <HomePageNavLink key={elt.title} to={`maths/${elt.title}`} title={elt.title} css={elt.color} />)
+    const navLinksList = mathsOptionsList.map(elt => <HomePageNavLink key={elt.title} to={`maths/${elt.title}`} title={elt.title.replace(/^./, elt.title[0].toUpperCase())} css={elt.color} />)
 
     const goToPreviousPath = () => {
         navigate(-1)
