@@ -1,11 +1,11 @@
-import { FC, useEffect, useReducer } from "react"
+import { FC, useReducer } from "react"
 import { useParams } from "react-router-dom"
 import { IMathsStateProps } from '../../helpers/interfacesHelpers'
 import Button from "../Button"
 
 const reducer = (state: IMathsStateProps, action: Partial<IMathsStateProps>) => ({...state, ...action})
 
-const MathsTraining: FC = ({}) => {
+const MathsTraining: FC = () => {
 
   const params = useParams()
   const optionsList = [
@@ -18,23 +18,23 @@ const MathsTraining: FC = ({}) => {
     'À vous de jouer !'
   ]
   const [mathsState, mathsDispatch] = useReducer(reducer, {
-    mode : "Clavier",
-    target: null,
-    time: null,
-    spanMessage: messagesList[0],
-})    
+      mode : "clavier",
+      target: null,
+      time: null,
+      spanMessage: messagesList[0],
+  })    
 
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsDispatch({target: elt, spanMessage: messagesList[1]})} color="bg-slate-400 border-slate-300"/>)
   const navLinksTimeList = optionsList[1].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsDispatch({time: elt, spanMessage: messagesList[2]})} color="bg-slate-400 border-slate-300"/>)
 
   return (
-    <div className="w-full flexJIC flex-col gap-12">
-      <div className="flexJIC gap-12">
-        <Button title="Clavier" color="bg-emerald-500 border-emerald-300" setter={() => mathsDispatch({mode: "Clavier"})}/>
-        <Button title="Boutons" color="bg-amber-400 border-amber-300" setter={() => mathsDispatch({mode: "Boutons"})}/>
+    <div className="w-full flexJIC flex-col gap-12 mb-12 xl:mb-0">
+      <div className="flexJIC gap-12 mt-2 sm:mt-0">
+        <Button title="Clavier" color="bg-emerald-500 border-emerald-300" setter={() => mathsDispatch({mode: "clavier"})}/>
+        <Button title="Boutons" color="bg-amber-400 border-amber-300" setter={() => mathsDispatch({mode: "boutons"})}/>
       </div>
-      <span className="p-6 font-bold text-2xl border-4 rounded-3xl border-blue-400 shadow-md">{mathsState.spanMessage}</span>
-      <div className="flexJIC gap-6">
+      <span className="p-4 text-center font-bold text-2xl border-4 rounded-3xl border-blue-400 shadow-md sm:p-6">{mathsState.spanMessage}</span>
+      <div className="flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         { 
           !mathsState.target && !mathsState.time && navLinksTargetsList
         }
@@ -42,7 +42,10 @@ const MathsTraining: FC = ({}) => {
           mathsState.target && !mathsState.time && navLinksTimeList
         }
         { 
-          mathsState.target && mathsState.time && <input type="text" name="" id="" />
+          mathsState.target && mathsState.time && mathsState.mode === "clavier" && <input type="text" name="" id="" />
+        }
+        { 
+          mathsState.target && mathsState.time && mathsState.mode === "boutons" &&  <Button title="Bouton" color="bg-emerald-500 border-emerald-300" />
         }
       </div>
     </div>
