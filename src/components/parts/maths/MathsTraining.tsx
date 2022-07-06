@@ -1,7 +1,8 @@
-import { FC, useReducer } from "react"
+import { FC, useEffect, useReducer } from "react"
 import { useParams } from "react-router-dom"
 import { IMathsStateProps } from '../../helpers/interfacesHelpers'
 import Button from "../Button"
+import { CountdownBar } from "../countdownBar/CountdownBar"
 
 const reducer = (state: IMathsStateProps, action: Partial<IMathsStateProps>) => ({...state, ...action})
 
@@ -15,17 +16,36 @@ const MathsTraining: FC = () => {
   const messagesList = [
     `Jusqu'à combien voulez-vous ${params.competence} ?`,
     `Combien de temps l'exercice va-t'il durer ?`,
-    'À vous de jouer !'
+    'À vos marques'
   ]
   const [mathsState, mathsDispatch] = useReducer(reducer, {
       mode : "clavier",
       target: null,
       time: null,
       spanMessage: messagesList[0],
+      displayTimer: false,
+      startTimer: false,
   })    
 
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsDispatch({target: elt, spanMessage: messagesList[1]})} color="bg-slate-400 border-slate-300"/>)
-  const navLinksTimeList = optionsList[1].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsDispatch({time: elt, spanMessage: messagesList[2]})} color="bg-slate-400 border-slate-300"/>)
+  const navLinksTimeList = optionsList[1].map(elt => <Button key={elt} title={elt.toLocaleString() + " min"} setter={() => mathsDispatch({time: elt, spanMessage: messagesList[2], displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
+
+  useEffect(() => {
+    mathsState.time && mathsState.spanMessage === "À vos marques" && setTimeout(() => {
+      mathsDispatch({
+        spanMessage: "Prêt ?",
+      })
+    }, 1500)
+    mathsState.time && mathsState.spanMessage === "Prêt ?" && !mathsState.startTimer && mathsDispatch({
+      startTimer: true,
+    })
+    mathsState.time && mathsState.spanMessage === "Prêt ?" && mathsState.startTimer && setTimeout(() => {
+      mathsDispatch({
+        spanMessage: "Go !",
+      })
+    }, 2000)
+  }, [mathsState])
+  
 
   return (
     <div className="w-full flexJIC flex-col gap-12 mb-12 xl:mb-0">
@@ -45,9 +65,12 @@ const MathsTraining: FC = () => {
           mathsState.target && mathsState.time && mathsState.mode === "clavier" && <input type="text" name="" id="" />
         }
         { 
-          mathsState.target && mathsState.time && mathsState.mode === "boutons" &&  <Button title="Bouton" color="bg-emerald-500 border-emerald-300" />
+          mathsState.target && mathsState.time && mathsState.mode === "boutons" && <Button title="Bouton" color="bg-emerald-500 border-emerald-300" />
         }
       </div>
+      {
+        mathsState.target && mathsState.time && mathsState.displayTimer && <CountdownBar timer={mathsState.time} startTimer={mathsState.startTimer} />
+      }
     </div>
   )
 }

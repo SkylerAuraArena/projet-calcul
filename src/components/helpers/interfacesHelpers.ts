@@ -42,8 +42,17 @@ export interface IHomePageNavLinkProps {
 }
 
 export interface IMathsStateProps {
-    get mode(): string | null;
+    get mode(): string;
     get target(): number | null;
     get time(): number | null;
-    get spanMessage(): string | null;
+    get spanMessage(): string;
+    get displayTimer(): boolean;
+    get startTimer(): boolean;
+}
+export interface ICountdownBarProps {
+    get timer(): number;
+    get startTimer(): boolean;
+}
+export interface ICountdownBarStateProps {
+    get time(): number;
 }

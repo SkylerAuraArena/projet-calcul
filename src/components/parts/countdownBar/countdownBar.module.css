@@ -1,0 +1,57 @@
+#timebar {
+    width: 100%;
+    height: 2.25rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: darken(hsl(145, 70, 30), 5%);
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444; 
+}
+
+#timebarFill {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(135deg, rgb(255, 69, 0) 25%, rgb(255, 0, 0) 25%, rgb(255, 0, 0) 50%,
+    rgb(255, 69, 0) 50%, rgb(255, 69, 0) 75%, rgb(255, 0, 0) 75%, rgb(255, 0, 0) 100%);
+    background-size: 2rem 2rem;
+    background-position: center;
+    transition: width 1s linear, opacity 1s ease-in-out;
+}
+
+
+
+/* base-colorOne: hsl(145, 70, 30);
+$stripe-thickness: 15px;
+
+@function white($opacity){
+    @return rgba(255,255,255,$opacity)
+}
+
+$colorOne3: darken( $base-colorOne, 15% );
+$colorOne4: darken( $base-colorOne, 10% );
+$colorOne5: $base-colorOne;
+$colorOne6: lighten( $base-colorOne, 10%);
+$colorOne7: lighten( $base-colorOne, 15%);
+$stripe-color: $colorOne7;
+
+
+.timer-container {
+    background-color: darken($colorOne3,5%);
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;   
+  
+  
+  span {
+    box-shadow: 0 1px 1px white(0.2) inset;
+    border-radius: 4px;
+    display: inline-block;
+    background-color: $stripe-color;   
+    background-size: $stripe-thickness $stripe-thickness;
+    background-image: 
+      linear-gradient(135deg, white(0.18) 25%,
+      transparent 25%,
+      transparent 50%, 
+      white(0.18) 50%, 
+      white(0.18) 75%,
+      transparent 75%, transparent);            
+  }
+  
+} */
