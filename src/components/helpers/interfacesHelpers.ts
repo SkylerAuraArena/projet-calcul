@@ -44,7 +44,8 @@ export interface IHomePageNavLinkProps {
 export interface IMathsStateProps {
     get mode(): string;
     get target(): number | null;
-    get time(): number | null;
+    get timer(): number | null;
+    get timeLeft(): number | null;
     get spanMessage(): string | string[];
     get spanCss(): string;
     get displayTimer(): boolean;
@@ -53,10 +54,9 @@ export interface IMathsStateProps {
 export interface ICountdownBarProps {
     get timer(): number;
     get startTimer(): boolean;
+    dispatch: Dispatch<Partial<IMathsStateProps>>
 }
-export interface ICountdownBarStateProps {
-    get time(): number;
-}
+
 export interface ITrainingOptionsSettingsProps {
     get text(): string;
     get css(): string;

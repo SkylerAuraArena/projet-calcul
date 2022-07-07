@@ -18,7 +18,8 @@ const MathsTraining: FC = () => {
   const [mathsState, mathsDispatch] = useReducer(reducer, {
       mode : "clavier",
       target: null,
-      time: null,
+      timer: null,
+      timeLeft: null,
       spanMessage: trainingOptionsSettingsList[0].text,
       spanCss: `${spanCss} ${trainingOptionsSettingsList[0].css}`,
       displayTimer: false,
@@ -26,24 +27,28 @@ const MathsTraining: FC = () => {
   })    
 
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsDispatch({target: elt, spanMessage: trainingOptionsSettingsList[1].text})} color="bg-slate-400 border-slate-300"/>)
-  const navLinksTimeList = optionsList[1].map(elt => <Button key={elt} title={elt.toLocaleString() + " min"} setter={() => mathsDispatch({time: elt, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
+  const navLinksTimeList = optionsList[1].map(elt => <Button key={elt} title={elt.toLocaleString() + " min"} setter={() => mathsDispatch({timer: elt, timeLeft: elt, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
 
   useEffect(() => {
-    mathsState.time && mathsState.spanMessage === "À vos marques" && setTimeout(() => {
+    mathsState.timer && mathsState.spanMessage === "À vos marques" && setTimeout(() => {
       mathsDispatch({
         spanMessage: trainingOptionsSettingsList[3].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[3].css}`,
       })
     }, 1500)
-    mathsState.time && mathsState.spanMessage === "Prêt ?" && !mathsState.startTimer && mathsDispatch({
+    mathsState.timer && mathsState.spanMessage === "Prêt ?" && !mathsState.startTimer && mathsDispatch({
       startTimer: true,
     })
-    mathsState.time && mathsState.spanMessage === "Prêt ?" && mathsState.startTimer && setTimeout(() => {
+    mathsState.timer && mathsState.spanMessage === "Prêt ?" && mathsState.startTimer && setTimeout(() => {
       mathsDispatch({
         spanMessage: trainingOptionsSettingsList[4].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
       })
     }, 2000)
+    mathsState.timer && mathsState.spanMessage === "Go !" && mathsState.startTimer && mathsState.timeLeft != null && mathsState.timeLeft === 0 && mathsDispatch({
+      spanMessage: trainingOptionsSettingsList[5].text, 
+      spanCss: `${spanCss} ${trainingOptionsSettingsList[5].css}`
+    })
   }, [mathsState])
   
 
@@ -56,21 +61,21 @@ const MathsTraining: FC = () => {
       <span className={mathsState.spanCss}>{mathsState.spanMessage}</span>
       <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         { 
-          !mathsState.target && !mathsState.time && navLinksTargetsList
+          !mathsState.target && !mathsState.timer && navLinksTargetsList
         }
         { 
-          mathsState.target && !mathsState.time && navLinksTimeList
+          mathsState.target && !mathsState.timer && navLinksTimeList
         }
         {
-          mathsState.target && mathsState.time && mathsState.displayTimer && <CountdownBar timer={mathsState.time} startTimer={mathsState.startTimer} />
+          mathsState.target && mathsState.timer && mathsState.displayTimer && <CountdownBar timer={mathsState.timer} startTimer={mathsState.startTimer} dispatch={mathsDispatch} />
         }
       </div>
       <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         { 
-          mathsState.target && mathsState.time && mathsState.mode === "clavier" && <input type="text" name="" id="" />
+          mathsState.target && mathsState.timer && mathsState.mode === "clavier" && <input type="text" name="" id="" />
         }
         { 
-          mathsState.target && mathsState.time && mathsState.mode === "boutons" && <Button title="Bouton" color="bg-emerald-500 border-emerald-300" />
+          mathsState.target && mathsState.timer && mathsState.mode === "boutons" && <Button title="Bouton" color="bg-emerald-500 border-emerald-300" />
         }
       </div>
     </div>
