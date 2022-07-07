@@ -45,7 +45,8 @@ export interface IMathsStateProps {
     get mode(): string;
     get target(): number | null;
     get time(): number | null;
-    get spanMessage(): string;
+    get spanMessage(): string | string[];
+    get spanCss(): string;
     get displayTimer(): boolean;
     get startTimer(): boolean;
 }
@@ -55,4 +56,8 @@ export interface ICountdownBarProps {
 }
 export interface ICountdownBarStateProps {
     get time(): number;
+}
+export interface ITrainingOptionsSettingsProps {
+    get text(): string;
+    get css(): string;
 }

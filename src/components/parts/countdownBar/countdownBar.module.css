@@ -1,15 +1,4 @@
-#timebar {
-    width: 100%;
-    height: 2.25rem;
-    padding: 0.5rem;
-    border-radius: 5px;
-    background-color: silver;
-    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444; 
-}
-
 #timebarFill {
-    width: 100%;
-    height: 100%;
     background-color: #1faf5b;   
     background-size: 15px 15px;
     background-image: 
@@ -20,5 +9,5 @@
         rgba(255,255,255,0.18) 75%,
         transparent 75%, transparent);   
     background-position: center;
-    transition: width 1s linear, opacity 1s ease-in-out, background-color 1.5s linear;
+    transition: width 1s linear, opacity 1s ease-in-out, background-color 1s linear;
 }

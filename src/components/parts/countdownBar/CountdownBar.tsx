@@ -7,9 +7,11 @@ const reducer = (state: ICountdownBarStateProps, action: Partial<ICountdownBarSt
 export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer}) => {
 
     const timerBarRef = useRef<HTMLDivElement | null>(null)
+    const timerTextRef = useRef<HTMLDivElement | null>(null)
     const [countdownBarState, countdownBarDispatch] = useReducer(reducer, {
         time : timer + 1,
     }) 
+    const barCss = 'flexJIC absolute left-[47.5%] top-[11.5%] text-2xl font-bold text-white'
     
     const countDown = () => {
         startTimer && countdownBarState.time >= 0 && setTimeout(() => {
@@ -23,6 +25,13 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer}) => {
         const percent = 100 / timer
         const actual = percent * countdownBarState.time - percent
         if(timerBarRef.current){
+            if(timerTextRef.current){
+                if(actual > 40){
+                    timerTextRef.current.className = `${barCss} text-white`
+                } else {
+                    timerTextRef.current.className = `${barCss} text-black`
+                }
+            }
             timerBarRef.current.style.width = actual + '%'
             countdownBarDispatch({time: countdownBarState.time - 1})
             if(countdownBarState.time <= 5){
@@ -47,10 +56,10 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer}) => {
     }, [countdownBarState.time,startTimer])
 
     return (
-        <div id={countdownBar.timebar}>
-            <div ref={timerBarRef} id={countdownBar.timebarFill}>
+        <div id={countdownBar.timebar} className="relative w-full h-12 p-2 border-2 rounded-2xl shadow-countdownBarShadowBox">
+            <div ref={timerBarRef} id={countdownBar.timebarFill} className="w-full h-full rounded-xl">
             </div>
-            <span>{countdownBarState.time >= timer ? timer : countdownBarState.time + 1}</span>
+            <span ref={timerTextRef} className={barCss}>{countdownBarState.time >= timer ? timer : countdownBarState.time + 1}</span>
         </div>
     )
 }

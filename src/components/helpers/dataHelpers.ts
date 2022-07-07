@@ -1,4 +1,4 @@
-import { IButtonProps } from "./interfacesHelpers";
+import { IButtonProps, ITrainingOptionsSettingsProps } from "./interfacesHelpers";
 
 export let skillList:Array<IButtonProps> = [{
     to:'maths',
@@ -13,7 +13,7 @@ export let skillList:Array<IButtonProps> = [{
 }, {
     to:'dactylo',
     title:'Dactylographie',
-    color:'bg-slate-400 border-slate-300',
+    color:'bg-slate-500 border-slate-300',
     func: () => {}
 }, {
     to:'langues',
@@ -25,7 +25,7 @@ export let skillList:Array<IButtonProps> = [{
 export let mathsOptionsList:Array<IButtonProps> = [{
     to:'maths-aleatoires',
     title:'Aléatoire',
-    color:'bg-slate-400 border-slate-300',
+    color:'bg-slate-500 border-slate-300',
     func: () => {}
 }, {
     to:'additions',
@@ -47,4 +47,21 @@ export let mathsOptionsList:Array<IButtonProps> = [{
     title:'diviser',
     color:'bg-red-500 border-red-300',
     func: () => {}
+}]
+
+export let trainingOptionsSettingsList:Array<ITrainingOptionsSettingsProps> = [{
+    text:"Sélectionner le nombre maximum de l'entraînement",
+    css:'border-blue-500',
+}, {
+    text:"Combien de temps l'exercice va-t'il durer ?",
+    css:'border-blue-500',
+}, {
+    text:'À vos marques',
+    css:'border-red-500 text-red-500',
+}, {
+    text:'Prêt ?',
+    css:'border-amber-400 text-amber-500',
+}, {
+    text:'Go !',
+    css:'border-emerald-500 text-emerald-500',
 }]
