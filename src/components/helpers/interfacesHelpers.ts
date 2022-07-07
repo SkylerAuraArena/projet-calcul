@@ -65,13 +65,16 @@ export interface IMathsAnswerProps {
     get ref(): any;
     get mode(): string;
     get limit(): number;
+    get spanMessage(): string | string[];
+    dispatch: Dispatch<Partial<IMathsTrainingStateProps>>;
+
 }
 export interface IMathsAnswerStateProps {
     get skill(): string;
-    // get btnDiv(): JSX.Element | null;
     get target(): number;
     get lastTarget(): number | null;
-    get answer(): number | null;
+    get param1(): number | null;
+    get param2(): number | null;
     get btn1Txt(): number;
     get btn2Txt(): number;
     get btn3Txt(): number;

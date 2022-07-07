@@ -15,7 +15,7 @@ const MathsTraining: FC = () => {
     [10,20,30,40,50,60,70,80,90,100,1000,10000],
     [0.5,1,2,3,5,10,15,20]
   ]
-  const spanCss = `p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6 `
+  const spanCss = `p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6`
   const [mathsTrainingState, mathsTrainingDispatch] = useReducer(reducer, {
       mode : "boutons",
       limit: null,
@@ -41,7 +41,7 @@ const MathsTraining: FC = () => {
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer && mathsTrainingDispatch({
       startTimer: true,
     })
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && mathsTrainingState.startTimer && setTimeout(() => {
+    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?"  && setTimeout(() => {
       mathsTrainingDispatch({
         spanMessage: trainingOptionsSettingsList[4].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
@@ -79,11 +79,11 @@ const MathsTraining: FC = () => {
           mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && <CountdownBar timer={mathsTrainingState.timer} startTimer={mathsTrainingState.startTimer} dispatch={mathsTrainingDispatch} />
         }
       </div>
-      {
-        mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.spanMessage === "Go !" && <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
-          <MathsAnswer ref={mathsAnswerRef}  mode={mathsTrainingState.mode} limit={mathsTrainingState.limit} />
-        </div>
-      }
+      <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
+        {
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && <MathsAnswer ref={mathsAnswerRef}  mode={mathsTrainingState.mode} limit={mathsTrainingState.limit} spanMessage={mathsTrainingState.spanMessage} dispatch={mathsTrainingDispatch} />
+        }
+      </div>
     </div>
   )
 }

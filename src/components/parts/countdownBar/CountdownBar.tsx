@@ -57,7 +57,6 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
             }
             timerBarRef.current.style.width = actual + '%'
 
-
             setTime(time => time - 1)
             countdownTimeStart()
 
@@ -86,7 +85,7 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
         <div id={countdownBar.timebar} className="relative w-full h-14 p-2 border-2 rounded-2xl shadow-countdownBarShadowBox">
             <div ref={timerBarRef} id={countdownBar.timebarFill} className="w-full h-full rounded-xl">
             </div>
-            <span className="flexJIC absolute left-[37.5%] top-[20%] text-2xl font-bold gap-2">
+            <span className="flexJIC absolute left-[37.5%] top-[18.5%] text-2xl font-bold gap-2">
                 <span ref={hoursTextRef}>{time >= timer ? maxTime[0] : timeLeft[0]}</span>
                 <span ref={minutesTextRef}>{time >= timer ? maxTime[1] : timeLeft[1]}</span>
                 <span ref={secondsTextRef}>{time >= timer ? maxTime[2] : timeLeft[2]}</span>
