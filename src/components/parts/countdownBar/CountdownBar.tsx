@@ -25,6 +25,9 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer}) => {
         if(timerBarRef.current){
             timerBarRef.current.style.width = actual + '%'
             countdownBarDispatch({time: countdownBarState.time - 1})
+            if(countdownBarState.time <= 5){
+                timerBarRef.current.style.backgroundColor = '#ff4500'
+            }
             if (countdownBarState.time === 5) {
                 timerBarRef.current.style.opacity = '0.25'
             } else if (countdownBarState.time === 4) {

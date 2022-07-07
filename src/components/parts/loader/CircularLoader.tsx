@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import loader from "./loader.module.css"
+import loader from "./circularLoader.module.css"
     
 export const Loader: FC = () => {
     return (
