@@ -66,5 +66,5 @@ export let trainingOptionsSettingsList:Array<ITrainingOptionsSettingsProps> = [{
     css:'border-emerald-500 text-emerald-500',
 }, {
     text:'Termps écoulé',
-    css:'border-red-500 text-red-500',
+    css:'border-red-300 bg-red-500 text-white',
 }]

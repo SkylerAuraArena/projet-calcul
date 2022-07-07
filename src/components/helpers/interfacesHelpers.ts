@@ -41,9 +41,9 @@ export interface IHomePageNavLinkProps {
     get css(): string
 }
 
-export interface IMathsStateProps {
+export interface IMathsTrainingStateProps {
     get mode(): string;
-    get target(): number | null;
+    get limit(): number | null;
     get timer(): number | null;
     get timeLeft(): number | null;
     get spanMessage(): string | string[];
@@ -54,10 +54,25 @@ export interface IMathsStateProps {
 export interface ICountdownBarProps {
     get timer(): number;
     get startTimer(): boolean;
-    dispatch: Dispatch<Partial<IMathsStateProps>>
+    dispatch: Dispatch<Partial<IMathsTrainingStateProps>>
 }
 
 export interface ITrainingOptionsSettingsProps {
     get text(): string;
     get css(): string;
+}
+export interface IMathsAnswerProps {
+    get ref(): any;
+    get mode(): string;
+    get limit(): number;
+}
+export interface IMathsAnswerStateProps {
+    get skill(): string;
+    // get btnDiv(): JSX.Element | null;
+    get target(): number;
+    get lastTarget(): number | null;
+    get answer(): number | null;
+    get btn1Txt(): number;
+    get btn2Txt(): number;
+    get btn3Txt(): number;
 }
