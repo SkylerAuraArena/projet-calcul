@@ -24,7 +24,7 @@ export let skillList:Array<IButtonProps> = [{
 
 export let mathsOptionsList:Array<IButtonProps> = [{
     to:'maths-aleatoires',
-    title:'Aléatoire',
+    title:'aléatoire',
     color:'bg-slate-500 border-slate-300',
     func: () => {}
 }, {

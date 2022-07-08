@@ -5,7 +5,7 @@ import Button from "../Button"
 const MathsAnswer: FC<IMathsAnswerProps> = forwardRef<HTMLInputElement, IMathsAnswerProps>(({ parentState, setSpanMsg }, ref) => {
 
     const handleClick = (btnTxt: string) => {
-        if(parentState.target){
+        if(parentState.target !== null){
             if (btnTxt === parentState.target.toString()) {
                 setSpanMsg(1)
             } else {

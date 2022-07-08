@@ -51,6 +51,7 @@ export interface IMathsTrainingStateProps {
     get displayTimer(): boolean;
     get startTimer(): boolean;
     get skill(): string;
+    get randomSkill(): string;
     get target(): number | null;
     get lastTarget(): number | null;
     get securityRenderCheck(): number | null;
