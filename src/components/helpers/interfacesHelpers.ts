@@ -53,11 +53,14 @@ export interface IMathsTrainingStateProps {
     get skill(): string;
     get target(): number | null;
     get lastTarget(): number | null;
+    get securityRenderCheck(): number | null;
     get param1(): number | null;
     get param2(): number | null;
     get btn1Txt(): number;
     get btn2Txt(): number;
     get btn3Txt(): number;
+    get questionsCounter(): number;
+    get goodAnswersCounter(): number;
 }
 export interface ICountdownBarProps {
     get timer(): number;

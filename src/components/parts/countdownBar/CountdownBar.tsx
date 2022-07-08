@@ -31,7 +31,8 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
             } else {
                 decreaseTimeBar()
                 dispatch({
-                    timeLeft: 0
+                    timeLeft: 0,
+                    displayTimer: false,
                 })
             }
         }, 1000)

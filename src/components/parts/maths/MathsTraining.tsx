@@ -28,11 +28,14 @@ const MathsTraining: FC = () => {
       skill: params.competence ? params.competence : 'additionner',
       target : null,
       lastTarget : null,
+      securityRenderCheck: null,
       param1: null,
       param2: null,
       btn1Txt: 0,
       btn2Txt: 0,
       btn3Txt: 0,
+      questionsCounter: 0,
+      goodAnswersCounter: 0,
   })    
   const mathsAnswerRef = useRef<HTMLInputElement | null>(null)
 
@@ -40,15 +43,20 @@ const MathsTraining: FC = () => {
   const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
 
   const setNewTarget = () => {
+    console.log('SetNewTarget')
     let newParam1
     let newParam2
     let newTarget
     let newBtn1Txt
     let newBtn2Txt
     let newBtn3Txt
+    let newSecurityRenderCheck
     if(mathsTrainingState.limit && mathsTrainingState.skill === 'additionner'){
         newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
         newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        while (mathsTrainingState.securityRenderCheck === newSecurityRenderCheck) {
+          newSecurityRenderCheck = Math.floor(Math.random() *  99999) 
+        }
         newTarget = newParam1 + newParam2
         const selectBtnToTarget = Math.floor(Math.random() * 3 + 1)
         newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
@@ -58,6 +66,7 @@ const MathsTraining: FC = () => {
     mathsTrainingDispatch({
         target: newTarget,
         lastTarget: mathsTrainingState.target,
+        securityRenderCheck: newSecurityRenderCheck,
         param1: newParam1,
         param2: newParam2,
         btn1Txt: newBtn1Txt,
@@ -85,11 +94,14 @@ const MathsTraining: FC = () => {
         mathsTrainingDispatch({
               spanMessage: `Raté`,
               spanCss: `${spanCss} text-red-500 border-red-500`,
+              questionsCounter: mathsTrainingState.questionsCounter + 1,
           })
       } else if(point === 1){
         mathsTrainingDispatch({
               spanMessage: `Bravo`,
               spanCss: `${spanCss} text-emerald-500 border-emerald-500`,
+              questionsCounter: mathsTrainingState.questionsCounter + 1,
+              goodAnswersCounter: mathsTrainingState.goodAnswersCounter + 1,
           })
       }
   }
@@ -124,20 +136,31 @@ const MathsTraining: FC = () => {
       console.log("F")
       setNewTarget()
     }, 1000)
-    mathsTrainingState.timer && (mathsTrainingState.spanMessage === trainingOptionsSettingsList[0].text || (mathsTrainingState.spanMessage !== trainingOptionsSettingsList[1].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[2].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[3].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[5].text)) && mathsTrainingState.startTimer && mathsTrainingState.timeLeft != null && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
+    mathsTrainingState.timer && !mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
       spanMessage: trainingOptionsSettingsList[5].text, 
       spanCss: `${spanCss} ${trainingOptionsSettingsList[5].css}`,
       displayTimer: false,
       startTimer: false,
+      target : null,
+      lastTarget : null,
+      param1: null,
+      param2: null,
+      btn1Txt: 0,
+      btn2Txt: 0,
+      btn3Txt: 0,
     })
+    if(mathsTrainingState.timer && !mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.timeLeft === 0){
+      console.log('G')
+    }
     if(mathsAnswerRef.current && mathsTrainingState.mode === "clavier" && mathsTrainingState.displayTimer){
       mathsAnswerRef.current.focus()
     }
-  }, [mathsTrainingState.timer, mathsTrainingState.startTimer, mathsTrainingState.spanMessage])
+  }, [mathsTrainingState.timer, mathsTrainingState.displayTimer, mathsTrainingState.startTimer, mathsTrainingState.spanMessage, mathsTrainingState.questionsCounter])
 
   useEffect(() => {
+    console.log("UE-SpanTxt")
     setSpanMsg(-1)
-  }, [mathsTrainingState.target])
+  }, [mathsTrainingState.target, mathsTrainingState.lastTarget, mathsTrainingState.securityRenderCheck])
 
   return (
     <div className="w-full flexJIC flex-col gap-12 mb-12 xl:mb-0">
