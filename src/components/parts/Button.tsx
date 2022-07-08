@@ -5,7 +5,7 @@ const Button: FC<IButtonProps> = ({ title, color, func, setter}) => {
     
     const css = `btn transition ${color}`
     const handleClick = () => {
-        func && func()
+        func && func(title)
         setter && setter([`Entraînement : ${title}`, title])
     }
 

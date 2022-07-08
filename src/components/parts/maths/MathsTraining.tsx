@@ -18,6 +18,8 @@ const MathsTraining: FC = () => {
   const spanCss = `p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6`
   const [mathsTrainingState, mathsTrainingDispatch] = useReducer(reducer, {
       mode : "boutons",
+      firstRenderTrigger: true,
+      rerender: false,
       limit: null,
       timer: null,
       timeLeft: null,
@@ -25,11 +27,79 @@ const MathsTraining: FC = () => {
       spanCss: `${spanCss} ${trainingOptionsSettingsList[0].css}`,
       displayTimer: false,
       startTimer: false,
+      skill: params.competence ? params.competence : 'additionner',
+      target : null,
+      lastTarget : null,
+      param1: null,
+      param2: null,
+      btn1Txt: 0,
+      btn2Txt: 0,
+      btn3Txt: 0,
   })    
   const mathsAnswerRef = useRef<HTMLInputElement | null>(null)
 
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsTrainingDispatch({limit: elt, spanMessage: trainingOptionsSettingsList[1].text})} color="bg-slate-400 border-slate-300"/>)
   const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
+
+  const setNewTarget = () => {
+    let newParam1
+    let newParam2
+    let newTarget
+    let newBtn1Txt
+    let newBtn2Txt
+    let newBtn3Txt
+    if(mathsTrainingState.limit && mathsTrainingState.skill === 'additionner'){
+        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
+        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newTarget = newParam1 + newParam2
+        const selectBtnToTarget = Math.floor(Math.random() * 3 + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+    }
+    mathsTrainingDispatch({
+        firstRenderTrigger: false,
+        rerender: false,
+        target: newTarget,
+        lastTarget: mathsTrainingState.target,
+        param1: newParam1,
+        param2: newParam2,
+        btn1Txt: newBtn1Txt,
+        btn2Txt: newBtn2Txt,
+        btn3Txt: newBtn3Txt,
+    })
+  }  
+
+  const setSpanMsg = (point: number) => {
+      console.log("BBBBBBBBBBBBBBB")
+      const spanCss = 'p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6'
+      let newSpanTxt = mathsTrainingState.spanMessage
+      if(point === -1){
+          if(newSpanTxt === "Bravo" || newSpanTxt === "Raté" || newSpanTxt === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt.includes("Combien font "))){
+              let operator
+              if(mathsTrainingState.skill === 'additionner'){
+                  operator  = '+'
+              }
+              newSpanTxt = [`Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`, `${spanCss} bg-amber-400 border-amber-300`]
+              mathsTrainingDispatch({
+                  spanMessage: `Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`,
+                  spanCss: `${spanCss} bg-amber-400 border-amber-300`,
+              })
+          }
+      } else if(point === 0){
+        mathsTrainingDispatch({
+              rerender: true,
+              spanMessage: `Raté`,
+              spanCss: `${spanCss} text-red-500 border-red-500`,
+          })
+      } else if(point === 1){
+        mathsTrainingDispatch({
+              rerender: true,
+              spanMessage: `Bravo`,
+              spanCss: `${spanCss} text-emerald-500 border-emerald-500`,
+          })
+      }
+  }
 
   useEffect(() => {
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "À vos marques" && setTimeout(() => {
@@ -47,6 +117,16 @@ const MathsTraining: FC = () => {
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
       })
     }, 2000)
+    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && mathsTrainingState.firstRenderTrigger && setTimeout(() => {
+      setNewTarget()
+    }, 1000)
+    mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && mathsTrainingState.rerender && setTimeout(() => {
+      console.log("AAAAAAAAAAAAAAAA")
+      setNewTarget()
+    }, 1000)
+    mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && !mathsTrainingState.rerender && setTimeout(() => {
+      setSpanMsg(-1)
+    }, 1000)
     mathsTrainingState.timer && (mathsTrainingState.spanMessage === trainingOptionsSettingsList[0].text || (mathsTrainingState.spanMessage !== trainingOptionsSettingsList[1].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[2].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[3].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[5].text)) && mathsTrainingState.startTimer && mathsTrainingState.timeLeft != null && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
       spanMessage: trainingOptionsSettingsList[5].text, 
       spanCss: `${spanCss} ${trainingOptionsSettingsList[5].css}`,
@@ -57,7 +137,10 @@ const MathsTraining: FC = () => {
       mathsAnswerRef.current.focus()
     }
   }, [mathsTrainingState])
-  
+
+  useEffect(() => {
+    setSpanMsg(-1)
+  }, [mathsTrainingState.target])
 
   return (
     <div className="w-full flexJIC flex-col gap-12 mb-12 xl:mb-0">
@@ -81,7 +164,8 @@ const MathsTraining: FC = () => {
       </div>
       <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         {
-          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && <MathsAnswer ref={mathsAnswerRef}  mode={mathsTrainingState.mode} limit={mathsTrainingState.limit} spanMessage={mathsTrainingState.spanMessage} timeLeft={mathsTrainingState.timeLeft} dispatch={mathsTrainingDispatch} />
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && !mathsTrainingState.rerender && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer ref={mathsAnswerRef}  parentState={mathsTrainingState} dispatch={mathsTrainingDispatch} setNewTarget={setNewTarget} setSpanMsg={setSpanMsg} />
+          // mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && (mathsTrainingState.spanMessage.includes("Combien font ") || mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && <MathsAnswer ref={mathsAnswerRef}  parentState={mathsTrainingState} dispatch={mathsTrainingDispatch} setNewTarget={setNewTarget} setSpanMsg={setSpanMsg} />
         }
       </div>
     </div>

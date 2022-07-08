@@ -17,7 +17,7 @@ export interface IButtonProps {
     to?: string
     get title(): string 
     get color() : string
-    func?: () => void
+    func?: (btnTxt: string) => void
     setter?: Dispatch<SetStateAction<string[]>>
 }
 
@@ -43,6 +43,8 @@ export interface IHomePageNavLinkProps {
 
 export interface IMathsTrainingStateProps {
     get mode(): string;
+    get firstRenderTrigger(): boolean;
+    get rerender(): boolean;
     get limit(): number | null;
     get timer(): number | null;
     get timeLeft(): number | null;
@@ -50,6 +52,14 @@ export interface IMathsTrainingStateProps {
     get spanCss(): string;
     get displayTimer(): boolean;
     get startTimer(): boolean;
+    get skill(): string;
+    get target(): number | null;
+    get lastTarget(): number | null;
+    get param1(): number | null;
+    get param2(): number | null;
+    get btn1Txt(): number;
+    get btn2Txt(): number;
+    get btn3Txt(): number;
 }
 export interface ICountdownBarProps {
     get timer(): number;
@@ -63,20 +73,9 @@ export interface ITrainingOptionsSettingsProps {
 }
 export interface IMathsAnswerProps {
     get ref(): any;
-    get mode(): string;
-    get limit(): number;
-    get timeLeft(): number | null;
-    get spanMessage(): string | string[];
+    get parentState(): IMathsTrainingStateProps; 
     dispatch: Dispatch<Partial<IMathsTrainingStateProps>>;
+    setNewTarget: () => void;
+    setSpanMsg: (point: number) => void;
 
-}
-export interface IMathsAnswerStateProps {
-    get skill(): string;
-    get target(): number;
-    get lastTarget(): number | null;
-    get param1(): number | null;
-    get param2(): number | null;
-    get btn1Txt(): number;
-    get btn2Txt(): number;
-    get btn3Txt(): number;
 }
