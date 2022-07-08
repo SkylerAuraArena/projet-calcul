@@ -65,6 +65,7 @@ export interface IMathsAnswerProps {
     get ref(): any;
     get mode(): string;
     get limit(): number;
+    get timeLeft(): number | null;
     get spanMessage(): string | string[];
     dispatch: Dispatch<Partial<IMathsTrainingStateProps>>;
 

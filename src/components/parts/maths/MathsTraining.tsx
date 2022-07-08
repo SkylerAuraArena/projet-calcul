@@ -81,7 +81,7 @@ const MathsTraining: FC = () => {
       </div>
       <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         {
-          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && <MathsAnswer ref={mathsAnswerRef}  mode={mathsTrainingState.mode} limit={mathsTrainingState.limit} spanMessage={mathsTrainingState.spanMessage} dispatch={mathsTrainingDispatch} />
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && <MathsAnswer ref={mathsAnswerRef}  mode={mathsTrainingState.mode} limit={mathsTrainingState.limit} spanMessage={mathsTrainingState.spanMessage} timeLeft={mathsTrainingState.timeLeft} dispatch={mathsTrainingDispatch} />
         }
       </div>
     </div>
