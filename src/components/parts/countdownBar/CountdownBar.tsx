@@ -59,7 +59,17 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
 
             setTime(time => time - 1)
             countdownTimeStart()
-
+            if(time <= 10){
+                if(hoursTextRef.current){
+                    hoursTextRef.current.className = `text-red-500`
+                }
+                if(minutesTextRef.current){
+                    minutesTextRef.current.className = `text-red-500`
+                }
+                if(secondsTextRef.current){
+                    secondsTextRef.current.className = `text-red-500`
+                }
+            }
             if(time <= 5){
                 timerBarRef.current.style.backgroundColor = '#ff4500'
             }

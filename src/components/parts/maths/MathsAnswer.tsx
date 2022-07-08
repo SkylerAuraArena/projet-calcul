@@ -78,7 +78,7 @@ const MathsAnswer: FC<IMathsAnswerProps> = forwardRef<HTMLInputElement, IMathsAn
                 mode === "boutons" && spanMessage !== "Prêt ?" && spanMessage !== "Go !" && <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
                     <Button title={mathsAnswerState.btn1Txt.toString()} color="bg-slate-400 border-slate-300" />
                     <Button title={mathsAnswerState.btn2Txt.toString()} color="bg-slate-400 border-slate-300" />
-                    <Button title={mathsAnswerState.btn3Txt.toString()} color="bg-slate-400 border-slate-300" />
+                    <Button title={mathsAnswerState.btn3Txt.toString()} color="bg-slate-400 border-slate-300 mb-3 xl:mb-0" />
                 </div>
             }
         {/* </div> */}
