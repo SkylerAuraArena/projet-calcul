@@ -43,8 +43,6 @@ export interface IHomePageNavLinkProps {
 
 export interface IMathsTrainingStateProps {
     get mode(): string;
-    get firstRenderTrigger(): boolean;
-    get rerender(): boolean;
     get limit(): number | null;
     get timer(): number | null;
     get timeLeft(): number | null;

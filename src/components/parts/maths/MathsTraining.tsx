@@ -18,8 +18,6 @@ const MathsTraining: FC = () => {
   const spanCss = `p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6`
   const [mathsTrainingState, mathsTrainingDispatch] = useReducer(reducer, {
       mode : "boutons",
-      firstRenderTrigger: true,
-      rerender: false,
       limit: null,
       timer: null,
       timeLeft: null,
@@ -58,8 +56,6 @@ const MathsTraining: FC = () => {
         newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
     }
     mathsTrainingDispatch({
-        firstRenderTrigger: false,
-        rerender: false,
         target: newTarget,
         lastTarget: mathsTrainingState.target,
         param1: newParam1,
@@ -71,7 +67,6 @@ const MathsTraining: FC = () => {
   }  
 
   const setSpanMsg = (point: number) => {
-      console.log("BBBBBBBBBBBBBBB")
       const spanCss = 'p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6'
       let newSpanTxt = mathsTrainingState.spanMessage
       if(point === -1){
@@ -88,13 +83,11 @@ const MathsTraining: FC = () => {
           }
       } else if(point === 0){
         mathsTrainingDispatch({
-              rerender: true,
               spanMessage: `Raté`,
               spanCss: `${spanCss} text-red-500 border-red-500`,
           })
       } else if(point === 1){
         mathsTrainingDispatch({
-              rerender: true,
               spanMessage: `Bravo`,
               spanCss: `${spanCss} text-emerald-500 border-emerald-500`,
           })
@@ -102,7 +95,9 @@ const MathsTraining: FC = () => {
   }
 
   useEffect(() => {
+    console.log("A")
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "À vos marques" && setTimeout(() => {
+      console.log("B")
       mathsTrainingDispatch({
         spanMessage: trainingOptionsSettingsList[3].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[3].css}`,
@@ -111,21 +106,23 @@ const MathsTraining: FC = () => {
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer && mathsTrainingDispatch({
       startTimer: true,
     })
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?"  && setTimeout(() => {
+    if(mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer){
+      console.log('C')
+    }
+    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && mathsTrainingState.startTimer && setTimeout(() => {
+      console.log("D")
       mathsTrainingDispatch({
         spanMessage: trainingOptionsSettingsList[4].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
       })
     }, 2000)
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && mathsTrainingState.firstRenderTrigger && setTimeout(() => {
+    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && setTimeout(() => {
+      console.log("E")
       setNewTarget()
     }, 1000)
-    mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && mathsTrainingState.rerender && setTimeout(() => {
-      console.log("AAAAAAAAAAAAAAAA")
+    mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && setTimeout(() => {
+      console.log("F")
       setNewTarget()
-    }, 1000)
-    mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && !mathsTrainingState.rerender && setTimeout(() => {
-      setSpanMsg(-1)
     }, 1000)
     mathsTrainingState.timer && (mathsTrainingState.spanMessage === trainingOptionsSettingsList[0].text || (mathsTrainingState.spanMessage !== trainingOptionsSettingsList[1].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[2].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[3].text && mathsTrainingState.spanMessage !== trainingOptionsSettingsList[5].text)) && mathsTrainingState.startTimer && mathsTrainingState.timeLeft != null && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
       spanMessage: trainingOptionsSettingsList[5].text, 
@@ -136,7 +133,7 @@ const MathsTraining: FC = () => {
     if(mathsAnswerRef.current && mathsTrainingState.mode === "clavier" && mathsTrainingState.displayTimer){
       mathsAnswerRef.current.focus()
     }
-  }, [mathsTrainingState])
+  }, [mathsTrainingState.timer, mathsTrainingState.startTimer, mathsTrainingState.spanMessage])
 
   useEffect(() => {
     setSpanMsg(-1)
@@ -164,8 +161,7 @@ const MathsTraining: FC = () => {
       </div>
       <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         {
-          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && !mathsTrainingState.rerender && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer ref={mathsAnswerRef}  parentState={mathsTrainingState} dispatch={mathsTrainingDispatch} setNewTarget={setNewTarget} setSpanMsg={setSpanMsg} />
-          // mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && (mathsTrainingState.spanMessage.includes("Combien font ") || mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage === "Raté") && <MathsAnswer ref={mathsAnswerRef}  parentState={mathsTrainingState} dispatch={mathsTrainingDispatch} setNewTarget={setNewTarget} setSpanMsg={setSpanMsg} />
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer ref={mathsAnswerRef}  parentState={mathsTrainingState} dispatch={mathsTrainingDispatch} setNewTarget={setNewTarget} setSpanMsg={setSpanMsg} />
         }
       </div>
     </div>
