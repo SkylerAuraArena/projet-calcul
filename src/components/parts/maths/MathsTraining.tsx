@@ -121,13 +121,13 @@ const MathsTraining: FC = () => {
     if(mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer){
       console.log('C')
     }
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && mathsTrainingState.startTimer && setTimeout(() => {
+    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && setTimeout(() => {
       console.log("D")
       mathsTrainingDispatch({
         spanMessage: trainingOptionsSettingsList[4].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
       })
-    }, 2000)
+    }, 1000)
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && setTimeout(() => {
       console.log("E")
       setNewTarget()
