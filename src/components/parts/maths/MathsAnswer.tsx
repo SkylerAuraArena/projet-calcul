@@ -48,7 +48,6 @@ const MathsAnswer: FC<IMathsAnswerProps> = (({ parentState, parentDispatch, setS
                             mathsAnwserInputRef.current = e 
                         }} />
                         <p>{errors.mathsAnswerInput?.message}</p>
-                        <input type="submit" />
                     </form>
                 </>
             }

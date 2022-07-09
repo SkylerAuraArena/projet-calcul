@@ -2,7 +2,6 @@ import { Dispatch } from "react"
 import { IMathsTrainingStateProps } from "./interfacesHelpers"
 
 export function setNewMathsTrainingTarget (mathsTrainingState: IMathsTrainingStateProps, mathsTrainingDispatch: Dispatch<Partial<IMathsTrainingStateProps>>) {
-    console.log('setNewMathsTrainingTarget')
     let newParam1
     let newParam2
     let newTarget
@@ -89,7 +88,6 @@ export function setNewMathsTrainingTarget (mathsTrainingState: IMathsTrainingSta
 export function setMathsSpanMsg(mathsTrainingState: IMathsTrainingStateProps, mathsTrainingDispatch: Dispatch<Partial<IMathsTrainingStateProps>>, status: number) {
     const spanCss = 'p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6'
     let newSpanTxt = mathsTrainingState.spanMessage
-    console.log("Span")
     if(status === -1){
         if(newSpanTxt === "Bravo" || newSpanTxt.includes("Raté") || newSpanTxt === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt.includes("Combien font "))){
             let operator

@@ -12,8 +12,8 @@ const HomePage: FC = () => {
     return (
         <div className='flexJIC flex-col gap-6 font-bold'>
             <span className='text-4xl mb-6 sm:mb-12 text-center'>Bienvenue, choisissez la matière</span>
-            <Button title="Déconnexion" color='bg-slate-400' func={logout} />
             { navLinksList }
+            <Button title="Déconnexion" color='bg-slate-400' func={logout} />
         </div>
     )
 }

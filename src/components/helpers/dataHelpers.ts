@@ -5,21 +5,21 @@ export let skillList:Array<IButtonProps> = [{
     title:'Mathématiques',
     color:'bg-amber-400 border-amber-300',
     func: () => {}
-}, {
-    to:'francais',
-    title:'Français',
-    color:'bg-blue-500 border-blue-300',
-    func: () => {}
-}, {
-    to:'dactylo',
-    title:'Dactylographie',
-    color:'bg-slate-500 border-slate-300',
-    func: () => {}
-}, {
-    to:'langues',
-    title:'Langues étrangères',
-    color:'bg-emerald-500 border-emerald-300',
-    func: () => {}
+// }, {
+//     to:'francais',
+//     title:'Français',
+//     color:'bg-blue-500 border-blue-300',
+//     func: () => {}
+// }, {
+//     to:'dactylo',
+//     title:'Dactylographie',
+//     color:'bg-slate-500 border-slate-300',
+//     func: () => {}
+// }, {
+//     to:'langues',
+//     title:'Langues étrangères',
+//     color:'bg-emerald-500 border-emerald-300',
+//     func: () => {}
 }]
 
 export let mathsOptionsList:Array<IButtonProps> = [{

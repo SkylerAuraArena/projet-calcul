@@ -9,16 +9,24 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
     const minutesTextRef = useRef<HTMLDivElement | null>(null)
     const secondsTextRef = useRef<HTMLDivElement | null>(null)
     const [time, setTime] = useState<number>(timer + 1)
-    const [maxTime, setMaxTime] = useState<Array<string>>(['','',''])
-    const [timeLeft, setTimeLeft] = useState<Array<string>>(['0h','0m','0s'])
+    const [maxTime, setMaxTime] = useState<Array<string>>(['', '', ''])
+    const [timeLeft, setTimeLeft] = useState<Array<string>>(['', '', ''])
 
     function countdownTimeStart(){
             var timeLeft = time * 1000
             var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
             var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
             var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000)
-            setTimeLeft([`${hours}h`,`${minutes}m`,`${seconds}s`])
-            maxTime[2] === "" && setMaxTime([`${hours}h`,`${minutes}m`,`${seconds - 1}s`])
+            if(hours === 0 && minutes === 0){
+                setTimeLeft(['','',`${seconds}s`])
+                maxTime[2] === "" && setMaxTime(['','',`${seconds - 1}s`])
+            } else if(hours === 0 && minutes > 0){
+                setTimeLeft(['',`${minutes}m`,`${seconds}s`])
+                maxTime[2] === "" && setMaxTime(['',`${minutes}m`,`${seconds - 1}s`])
+            } else {
+                setTimeLeft([`${hours}h`,`${minutes}m`,`${seconds}s`])
+                maxTime[2] === "" && setMaxTime([`${hours}h`,`${minutes}m`,`${seconds - 1}s`])
+            }
     }
     
     const countDown = () => {
@@ -42,20 +50,25 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
         const percent = 100 / timer
         const actual = percent * time - percent
         if(timerBarRef.current){
-            if(hoursTextRef.current && minutesTextRef.current && secondsTextRef.current){
-                if(actual > 44){
-                    hoursTextRef.current.className = `text-white`
-                } else {
-                    hoursTextRef.current.className = `text-black`
+            if(secondsTextRef.current && maxTime[0] === '' && maxTime[1] === ''){
+                if(actual <= 57){
+                    secondsTextRef.current.className = `text-black`
                 }
-                if(actual > 54){
-                    minutesTextRef.current.className = `text-white`
-                } else {
+            } else if(minutesTextRef.current && secondsTextRef.current && maxTime[0] === ''){
+                if(actual <= 52){
                     minutesTextRef.current.className = `text-black`
                 }
-                if(actual > 64){
-                    secondsTextRef.current.className = `text-white`
-                } else {
+                if(actual <= 66){
+                    secondsTextRef.current.className = `text-black`
+                }
+            } else if(hoursTextRef.current && minutesTextRef.current && secondsTextRef.current){
+                if(actual <= 40){
+                    hoursTextRef.current.className = `text-black`
+                }
+                if(actual <= 57){
+                    minutesTextRef.current.className = `text-black`
+                }
+                if(actual <= 72){
                     secondsTextRef.current.className = `text-black`
                 }
             }
@@ -99,11 +112,26 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
         <div id={countdownBar.timebar} className="relative w-full h-14 p-2 border-2 rounded-2xl shadow-countdownBarShadowBox">
             <div ref={timerBarRef} id={countdownBar.timebarFill} className="w-full h-full rounded-xl">
             </div>
-            <span className="flexJIC absolute left-[37.5%] top-[18.5%] text-2xl font-bold gap-2">
-                <span ref={hoursTextRef}>{time >= timer ? maxTime[0] : timeLeft[0]}</span>
-                <span ref={minutesTextRef}>{time >= timer ? maxTime[1] : timeLeft[1]}</span>
-                <span ref={secondsTextRef}>{time >= timer ? maxTime[2] : timeLeft[2]}</span>
-            </span>
+            <div className='w-full flexJIC absolute left-[0%] top-[18.5%] text-white text-center text-2xl font-bold'>
+                {
+                    maxTime[0] === '' && maxTime[1] === '' && <span className="flexJIC gap-2">            
+                        <span ref={secondsTextRef}>{time >= timer ? maxTime[2] : timeLeft[2]}</span>
+                    </span>
+                }
+                {
+                    maxTime[0] === '' && maxTime[1] !== '' && <span className="flexJIC gap-2">            
+                        <span ref={minutesTextRef}>{time >= timer ? maxTime[1] : timeLeft[1]}</span>
+                        <span ref={secondsTextRef}>{time >= timer ? maxTime[2] : timeLeft[2]}</span>
+                    </span>
+                }
+                {
+                    maxTime[0] !== '' && maxTime[1] !== '' && <span className="flexJIC gap-2">
+                        <span ref={hoursTextRef}>{time >= timer ? maxTime[0] : timeLeft[0]}</span>
+                        <span ref={minutesTextRef}>{time >= timer ? maxTime[1] : timeLeft[1]}</span>
+                        <span ref={secondsTextRef}>{time >= timer ? maxTime[2] : timeLeft[2]}</span>
+                    </span>
+                }
+            </div>
         </div>
     )
 }
