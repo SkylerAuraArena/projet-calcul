@@ -2,14 +2,14 @@ import { FC, forwardRef } from "react"
 import { IMathsAnswerProps } from "../../helpers/interfacesHelpers"
 import Button from "../Button"
 
-const MathsAnswer: FC<IMathsAnswerProps> = forwardRef<HTMLInputElement, IMathsAnswerProps>(({ parentState, setSpanMsg }, ref) => {
+const MathsAnswer: FC<IMathsAnswerProps> = forwardRef<HTMLInputElement, IMathsAnswerProps>(({ parentState, parentDispatch, setSpanMsg }, ref) => {
 
     const handleClick = (btnTxt: string) => {
         if(parentState.target !== null){
             if (btnTxt === parentState.target.toString()) {
-                setSpanMsg(1)
+                setSpanMsg(parentState, parentDispatch, 1)
             } else {
-                setSpanMsg(0)
+                setSpanMsg(parentState, parentDispatch, 0)
             }  
         }
     }

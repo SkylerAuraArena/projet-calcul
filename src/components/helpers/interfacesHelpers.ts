@@ -76,8 +76,6 @@ export interface ITrainingOptionsSettingsProps {
 export interface IMathsAnswerProps {
     get ref(): any;
     get parentState(): IMathsTrainingStateProps; 
-    dispatch: Dispatch<Partial<IMathsTrainingStateProps>>;
-    setNewTarget: () => void;
-    setSpanMsg: (point: number) => void;
-
+    parentDispatch: Dispatch<Partial<IMathsTrainingStateProps>>;
+    setSpanMsg: (state: IMathsTrainingStateProps, dispatch: Dispatch<Partial<IMathsTrainingStateProps>>,point: number) => void;
 }

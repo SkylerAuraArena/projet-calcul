@@ -2,6 +2,7 @@ import { FC, useEffect, useReducer, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { IMathsTrainingStateProps } from '../../helpers/interfacesHelpers'
 import { trainingOptionsSettingsList } from '../../helpers/dataHelpers'
+import { setMathsSpanMsg, setNewMathsTrainingTarget } from "../../helpers/functionsHelpers"
 import Button from "../Button"
 import { CountdownBar } from "../countdownBar/CountdownBar"
 import MathsAnswer from "./MathsAnswer"
@@ -43,131 +44,6 @@ const MathsTraining: FC = () => {
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsTrainingDispatch({limit: elt, spanMessage: trainingOptionsSettingsList[1].text})} color="bg-slate-400 border-slate-300"/>)
   const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
 
-  const setNewTarget = () => {
-    console.log('SetNewTarget')
-    let newParam1
-    let newParam2
-    let newTarget
-    let newBtn1Txt
-    let newBtn2Txt
-    let newBtn3Txt
-    let newSecurityRenderCheck
-    let newRandomSkill
-    while (mathsTrainingState.securityRenderCheck === newSecurityRenderCheck) {
-      newSecurityRenderCheck = Math.floor(Math.random() *  99999) 
-    }
-    const selectBtnToTarget = Math.floor(Math.random() * 3 + 1)
-    if (mathsTrainingState.limit && mathsTrainingState.skill === 'aléatoire') {
-      const RNG = Math.floor(Math.random() * 4 + 1)
-      newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-      newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-      if (RNG === 1) {
-        newRandomSkill = '+'
-        newTarget = newParam1 + newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-      } else if(RNG === 2) {
-        newRandomSkill = '-'
-        newTarget = newParam1 - newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-      } else if(RNG === 3) {
-        newRandomSkill = '*'
-        newTarget = newParam1 * newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-      } else if(RNG === 4) {
-        newRandomSkill = '/'
-        newTarget = parseFloat((newParam1 / newParam2).toFixed(2))
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-      }
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'additionner'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newTarget = newParam1 + newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'soustraire'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newTarget = newParam1 - newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'multiplier'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newTarget = newParam1 * newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'diviser'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newTarget = parseFloat((newParam1 / newParam2).toFixed(2))
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-    }
-    mathsTrainingDispatch({
-        target: newTarget,
-        lastTarget: mathsTrainingState.target,
-        securityRenderCheck: newSecurityRenderCheck,
-        param1: newParam1,
-        param2: newParam2,
-        btn1Txt: newBtn1Txt,
-        btn2Txt: newBtn2Txt,
-        btn3Txt: newBtn3Txt,
-        randomSkill: newRandomSkill,
-    })
-  }  
-
-  const setSpanMsg = (point: number) => {
-      const spanCss = 'p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6'
-      let newSpanTxt = mathsTrainingState.spanMessage
-      console.log("Span")
-      if(point === -1){
-          if(newSpanTxt === "Bravo" || newSpanTxt.includes("Raté") || newSpanTxt === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt.includes("Combien font "))){
-              let operator
-              if(mathsTrainingState.skill === 'additionner'){
-                  operator  = '+'
-              } else if(mathsTrainingState.skill === 'soustraire'){
-                operator  = '-'
-              } else if(mathsTrainingState.skill === 'multiplier'){
-                operator  = '*'
-              } else if(mathsTrainingState.skill === 'diviser'){
-                operator  = '/'
-              } else if(mathsTrainingState.skill === 'aléatoire'){
-                operator  = mathsTrainingState.randomSkill
-              }
-              newSpanTxt = [`Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`, `${spanCss} bg-amber-400 border-amber-300`]
-              mathsTrainingDispatch({
-                  spanMessage: `Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`,
-                  spanCss: `${spanCss} bg-amber-400 border-amber-300`,
-              })
-          }
-      } else if(point === 0){
-        mathsTrainingDispatch({
-              spanMessage: `Raté, la bonne réponse était : ${mathsTrainingState.target}`,
-              spanCss: `${spanCss} text-red-500 border-red-500`,
-              questionsCounter: mathsTrainingState.questionsCounter + 1,
-          })
-      } else if(point === 1){
-        mathsTrainingDispatch({
-              spanMessage: `Bravo`,
-              spanCss: `${spanCss} text-emerald-500 border-emerald-500`,
-              questionsCounter: mathsTrainingState.questionsCounter + 1,
-              goodAnswersCounter: mathsTrainingState.goodAnswersCounter + 1,
-          })
-      }
-  }
-
   useEffect(() => {
     console.log("A")
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "À vos marques" && setTimeout(() => {
@@ -192,11 +68,11 @@ const MathsTraining: FC = () => {
     }, 1000)
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && setTimeout(() => {
       console.log("E")
-      setNewTarget()
+      setNewMathsTrainingTarget(mathsTrainingState, mathsTrainingDispatch)
     }, 1000)
     mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage.includes("Raté")) && setTimeout(() => {
       console.log("F")
-      setNewTarget()
+      setNewMathsTrainingTarget(mathsTrainingState, mathsTrainingDispatch)
     }, 1000)
     mathsTrainingState.timer && !mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
       spanMessage: trainingOptionsSettingsList[5].text, 
@@ -221,7 +97,7 @@ const MathsTraining: FC = () => {
 
   useEffect(() => {
     console.log("UE-SpanTxt")
-    setSpanMsg(-1)
+    setMathsSpanMsg(mathsTrainingState, mathsTrainingDispatch,-1)
   }, [mathsTrainingState.target, mathsTrainingState.lastTarget, mathsTrainingState.securityRenderCheck])
 
   return (
@@ -246,7 +122,7 @@ const MathsTraining: FC = () => {
       </div>
       <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         {
-          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer ref={mathsAnswerRef}  parentState={mathsTrainingState} dispatch={mathsTrainingDispatch} setNewTarget={setNewTarget} setSpanMsg={setSpanMsg} />
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer ref={mathsAnswerRef} parentState={mathsTrainingState} parentDispatch={mathsTrainingDispatch} setSpanMsg={setMathsSpanMsg} />
         }
         {
           mathsTrainingState.timeLeft === 0 && <span className={`${spanCss} ${trainingOptionsSettingsList[0].css}`}>{`Voici votre score : ${mathsTrainingState.goodAnswersCounter} bonnes réponses sur ${mathsTrainingState.questionsCounter} questions`}</span>
