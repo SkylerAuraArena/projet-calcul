@@ -22,7 +22,7 @@ const MathsTraining: FC = () => {
       limit: null,
       timer: null,
       timeLeft: null,
-      spanMessage: trainingOptionsSettingsList[0].text,
+      spanMessage: [trainingOptionsSettingsList[0].text,''],
       spanCss: `${spanCss} ${trainingOptionsSettingsList[0].css}`,
       displayTimer: false,
       startTimer: false,
@@ -40,33 +40,33 @@ const MathsTraining: FC = () => {
       goodAnswersCounter: 0,
   })
 
-  const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsTrainingDispatch({limit: elt, spanMessage: trainingOptionsSettingsList[1].text})} color="bg-slate-400 border-slate-300"/>)
-  const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
+  const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsTrainingDispatch({limit: elt, spanMessage: [trainingOptionsSettingsList[1].text,'']})} color="bg-slate-400 border-slate-300"/>)
+  const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: [trainingOptionsSettingsList[2].text,''], spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
 
   useEffect(() => {
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "À vos marques" && setTimeout(() => {
+    mathsTrainingState.timer && mathsTrainingState.spanMessage[0] === "À vos marques" && setTimeout(() => {
       mathsTrainingDispatch({
-        spanMessage: trainingOptionsSettingsList[3].text,
+        spanMessage: [trainingOptionsSettingsList[3].text,''],
         spanCss: `${spanCss} ${trainingOptionsSettingsList[3].css}`,
       })
     }, 1500)
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer && mathsTrainingDispatch({
+    mathsTrainingState.timer && mathsTrainingState.spanMessage[0] === "Prêt ?" && !mathsTrainingState.startTimer && mathsTrainingDispatch({
       startTimer: true,
     })
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && setTimeout(() => {
+    mathsTrainingState.timer && mathsTrainingState.spanMessage[0] === "Prêt ?" && setTimeout(() => {
       mathsTrainingDispatch({
-        spanMessage: trainingOptionsSettingsList[4].text,
+        spanMessage: [trainingOptionsSettingsList[4].text,''],
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
       })
     }, 1000)
-    mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && setTimeout(() => {
+    mathsTrainingState.timer && mathsTrainingState.spanMessage[0] === "Go !" && setTimeout(() => {
       setNewMathsTrainingTarget(mathsTrainingState, mathsTrainingDispatch)
     }, 1000)
-    mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage.includes("Raté")) && setTimeout(() => {
+    mathsTrainingState.timer && (mathsTrainingState.spanMessage[0] === "Bravo" || mathsTrainingState.spanMessage[0].includes("Raté")) && setTimeout(() => {
       setNewMathsTrainingTarget(mathsTrainingState, mathsTrainingDispatch)
     }, 1000)
     mathsTrainingState.timer && !mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
-      spanMessage: trainingOptionsSettingsList[5].text, 
+      spanMessage: [trainingOptionsSettingsList[5].text,''], 
       spanCss: `${spanCss} ${trainingOptionsSettingsList[5].css}`,
       displayTimer: false,
       startTimer: false,
@@ -92,7 +92,12 @@ const MathsTraining: FC = () => {
             <Button title="Boutons" color="bg-amber-400 border-amber-300" setter={() => mathsTrainingDispatch({mode: "boutons"})}/>
           </div>
       }
-      <span className={mathsTrainingState.spanCss}>{mathsTrainingState.spanMessage}</span>
+      <div className={mathsTrainingState.spanCss}>
+        <span>{mathsTrainingState.spanMessage[0]}</span>
+        {
+          mathsTrainingState.spanMessage[1] !== '' && <span className="ml-1.5 text-black">{mathsTrainingState.spanMessage[1]}</span>
+        }
+      </div>
       <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         { 
           !mathsTrainingState.limit && !mathsTrainingState.timer && navLinksTargetsList
@@ -106,7 +111,7 @@ const MathsTraining: FC = () => {
       </div>
       <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         {
-          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer parentState={mathsTrainingState} parentDispatch={mathsTrainingDispatch} setSpanMsg={setMathsSpanMsg} />
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage[0].includes("Combien font ") && <MathsAnswer parentState={mathsTrainingState} parentDispatch={mathsTrainingDispatch} setSpanMsg={setMathsSpanMsg} />
         }
         {
           mathsTrainingState.timeLeft === 0 && <span className={`${spanCss} ${trainingOptionsSettingsList[0].css}`}>{`Voici votre score : ${mathsTrainingState.goodAnswersCounter} bonnes réponses sur ${mathsTrainingState.questionsCounter} questions`}</span>

@@ -89,7 +89,7 @@ export function setMathsSpanMsg(mathsTrainingState: IMathsTrainingStateProps, ma
     const spanCss = 'p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6'
     let newSpanTxt = mathsTrainingState.spanMessage
     if(status === -1){
-        if(newSpanTxt === "Bravo" || newSpanTxt.includes("Raté") || newSpanTxt === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt.includes("Combien font "))){
+        if(newSpanTxt[0] === "Bravo" || newSpanTxt[0].includes("Raté") || newSpanTxt[0] === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt[0].includes("Combien font "))){
             let operator
             if(mathsTrainingState.skill === 'additionner'){
                 operator  = '+'
@@ -102,21 +102,21 @@ export function setMathsSpanMsg(mathsTrainingState: IMathsTrainingStateProps, ma
             } else if(mathsTrainingState.skill === 'aléatoire'){
               operator  = mathsTrainingState.randomSkill
             }
-            newSpanTxt = [`Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`, `${spanCss} bg-amber-400 border-amber-300`]
+            newSpanTxt = [`Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`, '']
             mathsTrainingDispatch({
-                spanMessage: `Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`,
+                spanMessage: [`Combien font ${mathsTrainingState.param1} ${operator} ${mathsTrainingState.param2} ?`,''],
                 spanCss: `${spanCss} bg-amber-400 border-amber-300`,
             })
         }
     } else if(status === 0){
       mathsTrainingDispatch({
-            spanMessage: `Raté, la bonne réponse était : ${mathsTrainingState.target}`,
+            spanMessage: ['Raté, la bonne réponse était :',`${mathsTrainingState.target}`],
             spanCss: `${spanCss} text-red-500 border-red-500`,
             questionsCounter: mathsTrainingState.questionsCounter + 1,
         })
     } else if(status === 1){
       mathsTrainingDispatch({
-            spanMessage: `Bravo`,
+            spanMessage: ['Bravo', ''],
             spanCss: `${spanCss} text-emerald-500 border-emerald-500`,
             questionsCounter: mathsTrainingState.questionsCounter + 1,
             goodAnswersCounter: mathsTrainingState.goodAnswersCounter + 1,

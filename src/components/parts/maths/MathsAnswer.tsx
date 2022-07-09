@@ -1,5 +1,5 @@
-import { FC, forwardRef, useEffect, useRef } from "react"
-import { useForm, SubmitHandler, UseFormRegister, Path } from "react-hook-form";
+import { FC, useEffect, useRef } from "react"
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { IMathsAnswerProps } from "../../helpers/interfacesHelpers"
@@ -41,7 +41,7 @@ const MathsAnswer: FC<IMathsAnswerProps> = (({ parentState, parentDispatch, setS
     return (
         <>
             {
-                parentState.mode === "clavier" && parentState.spanMessage !== "Prêt ?" && <>
+                parentState.mode === "clavier" && parentState.spanMessage[0] !== "Prêt ?" && <>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input {...rest} name="mathsAnswerInput" id="mathsAnswerInput" placeholder="Votre réponse ?" ref={(e) => {
                             ref(e) 
@@ -52,7 +52,7 @@ const MathsAnswer: FC<IMathsAnswerProps> = (({ parentState, parentDispatch, setS
                 </>
             }
             {
-                parentState.mode === "boutons" && parentState.spanMessage !== "Prêt ?" && <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
+                parentState.mode === "boutons" && parentState.spanMessage[0] !== "Prêt ?" && <div className="w-full flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
                     <Button title={parentState.btn1Txt.toString()} color="bg-slate-400 border-slate-300" func={handleClick} />
                     <Button title={parentState.btn2Txt.toString()} color="bg-slate-400 border-slate-300" func={handleClick} />
                     <Button title={parentState.btn3Txt.toString()} color="bg-slate-400 border-slate-300 mb-3 xl:mb-0" func={handleClick} />

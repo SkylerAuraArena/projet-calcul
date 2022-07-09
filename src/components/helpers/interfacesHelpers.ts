@@ -46,7 +46,7 @@ export interface IMathsTrainingStateProps {
     get limit(): number | null;
     get timer(): number | null;
     get timeLeft(): number | null;
-    get spanMessage(): string | string[];
+    get spanMessage(): string[];
     get spanCss(): string;
     get displayTimer(): boolean;
     get startTimer(): boolean;
