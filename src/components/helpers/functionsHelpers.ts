@@ -86,7 +86,7 @@ export function setNewMathsTrainingTarget (mathsTrainingState: IMathsTrainingSta
 }  
 
 export function setMathsSpanMsg(mathsTrainingState: IMathsTrainingStateProps, mathsTrainingDispatch: Dispatch<Partial<IMathsTrainingStateProps>>, status: number) {
-    const spanCss = 'p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6'
+    const spanCss = mathsTrainingState.defaultSpanCss
     let newSpanTxt = mathsTrainingState.spanMessage
     if(status === -1){
         if(newSpanTxt[0] === "Bravo" || newSpanTxt[0].includes("Raté") || newSpanTxt[0] === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt[0].includes("Combien font "))){

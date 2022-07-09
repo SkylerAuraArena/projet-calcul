@@ -14,6 +14,7 @@ export interface IAuthContextProps extends IChildrenProps {
 }
 
 export interface IButtonProps {
+    ref?: any
     to?: string
     get title(): string 
     get color() : string
@@ -47,6 +48,7 @@ export interface IMathsTrainingStateProps {
     get timer(): number | null;
     get timeLeft(): number | null;
     get spanMessage(): string[];
+    get defaultSpanCss(): string;
     get spanCss(): string;
     get displayTimer(): boolean;
     get startTimer(): boolean;

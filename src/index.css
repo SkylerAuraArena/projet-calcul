@@ -7,12 +7,14 @@
 .flexJIC {
   @apply flex justify-center items-center;
 }
-/* .g-px {
-  @apply px-6;
-} */
-
+.btnBase {
+  @apply w-full p-4 border-2 rounded-2xl text-white text-center text-2xl font-medium hover:shadow-shadowBoxHover;
+}
 .btn {
-  @apply w-full p-4 border-2 rounded-2xl shadow-shadowBox text-white text-center text-2xl font-medium hover:shadow-shadowBoxHover;
+  @apply btnBase shadow-shadowBox;
+}
+.btnClicked {
+  @apply btnBase shadow-inner hover:shadow-inner;
 }
 .transition {
   @apply transition-all hover:scale-110 cursor-pointer

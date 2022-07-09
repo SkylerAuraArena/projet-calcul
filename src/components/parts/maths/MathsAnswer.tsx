@@ -18,9 +18,9 @@ const MathsAnswer: FC<IMathsAnswerProps> = (({ parentState, parentDispatch, setS
     const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>({
         resolver: yupResolver(schema)
     })
-    const mathsAnwserInputRef = useRef<HTMLInputElement | null>(null);
+    const mathsAnwserInputRef = useRef<HTMLInputElement | null>(null)
     const onSubmit: SubmitHandler<IFormValues> = data => handleClick(data.mathsAnswerInput)
-    const { ref, ...rest } = register('mathsAnswerInput');
+    const { ref, ...rest } = register('mathsAnswerInput')
 
     const handleClick = (btnTxt: string) => {
         if(parentState.target !== null){

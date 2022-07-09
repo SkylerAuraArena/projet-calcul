@@ -1,6 +1,6 @@
 import { IButtonProps, ITrainingOptionsSettingsProps } from "./interfacesHelpers";
 
-export let skillList:Array<IButtonProps> = [{
+export const skillList: Array<IButtonProps> = [{
     to:'maths',
     title:'Mathématiques',
     color:'bg-amber-400 border-amber-300',
@@ -22,7 +22,7 @@ export let skillList:Array<IButtonProps> = [{
 //     func: () => {}
 }]
 
-export let mathsOptionsList:Array<IButtonProps> = [{
+export const mathsOptionsList: Array<IButtonProps> = [{
     to:'maths-aleatoires',
     title:'aléatoire',
     color:'bg-slate-500 border-slate-300',
@@ -49,7 +49,7 @@ export let mathsOptionsList:Array<IButtonProps> = [{
     func: () => {}
 }]
 
-export let trainingOptionsSettingsList:Array<ITrainingOptionsSettingsProps> = [{
+export const trainingOptionsSettingsList: Array<ITrainingOptionsSettingsProps> = [{
     text:"Sélectionner l'opérande maximum des opérations",
     css:'border-blue-500',
 }, {
@@ -68,3 +68,8 @@ export let trainingOptionsSettingsList:Array<ITrainingOptionsSettingsProps> = [{
     text:'Termps écoulé',
     css:'border-red-300 bg-red-500 text-white',
 }]
+
+export const optionsList: number[][] = [
+    [10,20,30,40,50,60,70,80,90,100,1000,10000],
+    [0.5,1,2,3,5,10,15,20]
+  ]

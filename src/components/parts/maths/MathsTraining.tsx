@@ -1,7 +1,7 @@
-import { FC, useEffect, useReducer } from "react"
+import { FC, useEffect, useReducer, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { IMathsTrainingStateProps } from '../../helpers/interfacesHelpers'
-import { trainingOptionsSettingsList } from '../../helpers/dataHelpers'
+import { trainingOptionsSettingsList, optionsList } from '../../helpers/dataHelpers'
 import { setMathsSpanMsg, setNewMathsTrainingTarget } from "../../helpers/functionsHelpers"
 import Button from "../Button"
 import { CountdownBar } from "../countdownBar/CountdownBar"
@@ -12,17 +12,16 @@ const reducer = (state: IMathsTrainingStateProps, action: Partial<IMathsTraining
 const MathsTraining: FC = () => {
 
   const params = useParams()
-  const optionsList = [
-    [10,20,30,40,50,60,70,80,90,100,1000,10000],
-    [0.5,1,2,3,5,10,15,20]
-  ]
-  const spanCss = `p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-md sm:p-6`
+  const spanCss = `p-4 text-center font-bold text-2xl border-4 rounded-3xl shadow-xl sm:p-6`
+  const btnButtonCss = 'transition bg-amber-400 border-amber-300'
+  const btnKeyboardCss = 'transition bg-emerald-500 border-emerald-300'
   const [mathsTrainingState, mathsTrainingDispatch] = useReducer(reducer, {
       mode : "boutons",
       limit: null,
       timer: null,
       timeLeft: null,
       spanMessage: [trainingOptionsSettingsList[0].text,''],
+      defaultSpanCss: spanCss,
       spanCss: `${spanCss} ${trainingOptionsSettingsList[0].css}`,
       displayTimer: false,
       startTimer: false,
@@ -39,6 +38,8 @@ const MathsTraining: FC = () => {
       questionsCounter: 0,
       goodAnswersCounter: 0,
   })
+  const keyboardBtnRef = useRef<HTMLButtonElement | null>(null)
+  const buttonsBtnRef = useRef<HTMLButtonElement | null>(null)
 
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsTrainingDispatch({limit: elt, spanMessage: [trainingOptionsSettingsList[1].text,'']})} color="bg-slate-400 border-slate-300"/>)
   const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: [trainingOptionsSettingsList[2].text,''], spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
@@ -84,12 +85,25 @@ const MathsTraining: FC = () => {
     setMathsSpanMsg(mathsTrainingState, mathsTrainingDispatch,-1)
   }, [mathsTrainingState.target, mathsTrainingState.lastTarget, mathsTrainingState.securityRenderCheck])
 
+  useEffect(() => {
+    if(keyboardBtnRef.current && buttonsBtnRef.current){
+      if(mathsTrainingState.mode === "clavier"){
+        keyboardBtnRef.current.className = `btnClicked ${btnKeyboardCss}`
+        buttonsBtnRef.current.className = `btn ${btnButtonCss}`
+      } else {
+        keyboardBtnRef.current.className = `btn ${btnKeyboardCss}`
+        buttonsBtnRef.current.className = `btnClicked ${btnButtonCss}`
+      }
+    }
+  }, [mathsTrainingState.mode, mathsTrainingState.spanMessage])
+  
+
   return (
     <div className="w-full flexJIC flex-col gap-12 mb-12 xl:mb-0">
       {
         mathsTrainingState.displayTimer && <div className="hidden xl:flex xl:justify-center xl:items-center gap-12 mt-2 sm:mt-0">
-            <Button title="Clavier" color="bg-emerald-500 border-emerald-300" setter={() => mathsTrainingDispatch({mode: "clavier"})}/>
-            <Button title="Boutons" color="bg-amber-400 border-amber-300" setter={() => mathsTrainingDispatch({mode: "boutons"})}/>
+            <button ref={buttonsBtnRef} className={`btn ${btnButtonCss}`} title="Boutons" onClick={() => mathsTrainingDispatch({mode: "boutons"})}>Boutons</button>
+            <button ref={keyboardBtnRef} className={`btn ${btnKeyboardCss}`} title="Clavier" onClick={() => mathsTrainingDispatch({mode: "clavier"})}>Clavier</button>
           </div>
       }
       <div className={mathsTrainingState.spanCss}>
