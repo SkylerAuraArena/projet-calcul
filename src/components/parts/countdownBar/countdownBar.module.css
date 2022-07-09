@@ -10,4 +10,10 @@
         transparent 75%, transparent);   
     background-position: center;
     transition: width 1s linear, opacity 1s ease-in-out, background-color 1s linear;
+    animation: animatestripes 5s linear infinite;
+    
+}
+
+@keyframes animatestripes {
+    0% {background-position: 0 0;} 100% {background-position: -100px 0;}
 }

@@ -87,7 +87,7 @@ const MathsTraining: FC = () => {
   return (
     <div className="w-full flexJIC flex-col gap-12 mb-12 xl:mb-0">
       {
-        mathsTrainingState.displayTimer && <div className="flexJIC gap-12 mt-2 sm:mt-0">
+        mathsTrainingState.displayTimer && <div className="hidden xl:flex xl:justify-center xl:items-center gap-12 mt-2 sm:mt-0">
             <Button title="Clavier" color="bg-emerald-500 border-emerald-300" setter={() => mathsTrainingDispatch({mode: "clavier"})}/>
             <Button title="Boutons" color="bg-amber-400 border-amber-300" setter={() => mathsTrainingDispatch({mode: "boutons"})}/>
           </div>

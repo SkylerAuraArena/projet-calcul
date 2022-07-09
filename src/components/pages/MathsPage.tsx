@@ -33,9 +33,11 @@ const MathsPage: FC = () => {
     }, [location])
 
     return (
+        // <div className='flexJIC -mt-40 xl:mt-0'>
         <div className='flexJIC'>
             {backArrowDivSMXL}
             <div className='flexJIC flex-col gap-2 sm:gap-6 xl:gap-12'>
+                {/* <div className='w-full hidden xl:flex xl:justify-center xl:items-center'> */}
                 <div className='w-full flexJIC'>
                     <span className='text-4xl leading-normal font-bold text-center'>{mathsState[0]}</span>
                 </div>

@@ -50,7 +50,7 @@ export let mathsOptionsList:Array<IButtonProps> = [{
 }]
 
 export let trainingOptionsSettingsList:Array<ITrainingOptionsSettingsProps> = [{
-    text:"Sélectionner le nombre maximum de l'entraînement",
+    text:"Sélectionner l'opérande maximum des opérations",
     css:'border-blue-500',
 }, {
     text:"Combien de temps l'exercice va-t'il durer ?",

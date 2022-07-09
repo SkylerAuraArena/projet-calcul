@@ -7,7 +7,7 @@
 -Barre de timer : https://codepen.io/makaimarcell/pen/ZELgdLm
 
 A modifier :
--Effet de bande du compte à rebours
 -Position du texte du compte à rebours en responsif
 -En cas d'erreur, mettre le nombre de réponse dans une autre couleur que le texte
 -Effet de bouton appuyé le cas échéant
+-Titre de l'entrainement effacé hors vue XL
