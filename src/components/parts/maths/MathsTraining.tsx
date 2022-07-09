@@ -1,4 +1,4 @@
-import { FC, useEffect, useReducer, useRef } from "react"
+import { FC, useEffect, useReducer } from "react"
 import { useParams } from "react-router-dom"
 import { IMathsTrainingStateProps } from '../../helpers/interfacesHelpers'
 import { trainingOptionsSettingsList } from '../../helpers/dataHelpers'
@@ -38,16 +38,13 @@ const MathsTraining: FC = () => {
       btn3Txt: 0,
       questionsCounter: 0,
       goodAnswersCounter: 0,
-  })    
-  const mathsAnswerRef = useRef<HTMLInputElement | null>(null)
+  })
 
   const navLinksTargetsList = optionsList[0].map(elt => <Button key={elt} title={elt.toLocaleString()} setter={() => mathsTrainingDispatch({limit: elt, spanMessage: trainingOptionsSettingsList[1].text})} color="bg-slate-400 border-slate-300"/>)
   const navLinksTimeList = optionsList[1].map((elt, index) => <Button key={elt} title={index === 0 ?"30 sec" : elt.toLocaleString() + " min"} setter={() => mathsTrainingDispatch({timer: elt * 60, timeLeft: elt * 60, spanMessage: trainingOptionsSettingsList[2].text, spanCss: `${spanCss} ${trainingOptionsSettingsList[2].css}`, displayTimer: true})} color="bg-slate-400 border-slate-300"/>)
 
   useEffect(() => {
-    console.log("A")
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "À vos marques" && setTimeout(() => {
-      console.log("B")
       mathsTrainingDispatch({
         spanMessage: trainingOptionsSettingsList[3].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[3].css}`,
@@ -56,22 +53,16 @@ const MathsTraining: FC = () => {
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer && mathsTrainingDispatch({
       startTimer: true,
     })
-    if(mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && !mathsTrainingState.startTimer){
-      console.log('C')
-    }
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Prêt ?" && setTimeout(() => {
-      console.log("D")
       mathsTrainingDispatch({
         spanMessage: trainingOptionsSettingsList[4].text,
         spanCss: `${spanCss} ${trainingOptionsSettingsList[4].css}`,
       })
     }, 1000)
     mathsTrainingState.timer && mathsTrainingState.spanMessage === "Go !" && setTimeout(() => {
-      console.log("E")
       setNewMathsTrainingTarget(mathsTrainingState, mathsTrainingDispatch)
     }, 1000)
     mathsTrainingState.timer && (mathsTrainingState.spanMessage === "Bravo" || mathsTrainingState.spanMessage.includes("Raté")) && setTimeout(() => {
-      console.log("F")
       setNewMathsTrainingTarget(mathsTrainingState, mathsTrainingDispatch)
     }, 1000)
     mathsTrainingState.timer && !mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.timeLeft === 0 && mathsTrainingDispatch({
@@ -87,16 +78,9 @@ const MathsTraining: FC = () => {
       btn2Txt: 0,
       btn3Txt: 0,
     })
-    if(mathsTrainingState.timer && !mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.timeLeft === 0){
-      console.log('G')
-    }
-    if(mathsAnswerRef.current && mathsTrainingState.mode === "clavier" && mathsTrainingState.displayTimer){
-      mathsAnswerRef.current.focus()
-    }
   }, [mathsTrainingState.timer, mathsTrainingState.displayTimer, mathsTrainingState.startTimer, mathsTrainingState.spanMessage, mathsTrainingState.questionsCounter])
 
   useEffect(() => {
-    console.log("UE-SpanTxt")
     setMathsSpanMsg(mathsTrainingState, mathsTrainingDispatch,-1)
   }, [mathsTrainingState.target, mathsTrainingState.lastTarget, mathsTrainingState.securityRenderCheck])
 
@@ -122,7 +106,7 @@ const MathsTraining: FC = () => {
       </div>
       <div className="w-full h-[68px] flexJIC flex-row gap-6 flex-wrap xl:flex-nowrap">
         {
-          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer ref={mathsAnswerRef} parentState={mathsTrainingState} parentDispatch={mathsTrainingDispatch} setSpanMsg={setMathsSpanMsg} />
+          mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage.includes("Combien font ") && <MathsAnswer parentState={mathsTrainingState} parentDispatch={mathsTrainingDispatch} setSpanMsg={setMathsSpanMsg} />
         }
         {
           mathsTrainingState.timeLeft === 0 && <span className={`${spanCss} ${trainingOptionsSettingsList[0].css}`}>{`Voici votre score : ${mathsTrainingState.goodAnswersCounter} bonnes réponses sur ${mathsTrainingState.questionsCounter} questions`}</span>

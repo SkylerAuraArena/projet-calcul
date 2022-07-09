@@ -74,7 +74,6 @@ export interface ITrainingOptionsSettingsProps {
     get css(): string;
 }
 export interface IMathsAnswerProps {
-    get ref(): any;
     get parentState(): IMathsTrainingStateProps; 
     parentDispatch: Dispatch<Partial<IMathsTrainingStateProps>>;
     setSpanMsg: (state: IMathsTrainingStateProps, dispatch: Dispatch<Partial<IMathsTrainingStateProps>>,point: number) => void;
