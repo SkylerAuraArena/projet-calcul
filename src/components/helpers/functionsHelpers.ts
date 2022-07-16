@@ -2,75 +2,200 @@ import { Dispatch } from "react"
 import { IMathsTrainingStateProps } from "./interfacesHelpers"
 
 export function setNewMathsTrainingTarget (mathsTrainingState: IMathsTrainingStateProps, mathsTrainingDispatch: Dispatch<Partial<IMathsTrainingStateProps>>) {
-    let newParam1
-    let newParam2
+    const targetLimit = mathsTrainingState.limit ? mathsTrainingState.limit : 0 
+    let newParam1 = Math.floor(Math.random() * targetLimit + 1)
+    let newParam2 = Math.floor(Math.random() *  targetLimit + 1)
     let newTarget
     let newBtn1Txt
     let newBtn2Txt
     let newBtn3Txt
     let newSecurityRenderCheck
     let newRandomSkill
+    let btnOperand1 = Math.floor(Math.random() *  targetLimit + 1)
+    let btnOperand2 = Math.floor(Math.random() *  targetLimit + 1)
+    let btnOperand3 = Math.floor(Math.random() *  targetLimit + 1)
+    let btnOperand4 = Math.floor(Math.random() *  targetLimit + 1)
+    let btnOperand5 = Math.floor(Math.random() *  targetLimit + 1)
+    let btnOperand6 = Math.floor(Math.random() *  targetLimit + 1)
     while (mathsTrainingState.securityRenderCheck === newSecurityRenderCheck) {
       newSecurityRenderCheck = Math.floor(Math.random() *  99999) 
     }
     const selectBtnToTarget = Math.floor(Math.random() * 3 + 1)
-    if (mathsTrainingState.limit && mathsTrainingState.skill === 'aléatoire') {
+    if (mathsTrainingState.skill === 'aléatoire') {
       const RNG = Math.floor(Math.random() * 4 + 1)
-      newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-      newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
       if (RNG === 1) {
         newRandomSkill = '+'
+        while (btnOperand1 + btnOperand2 === btnOperand3 + btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 + btnOperand2 === btnOperand5 + btnOperand6 || btnOperand3 + btnOperand4 === btnOperand5 + btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 + btnOperand2 === btnOperand5 + btnOperand6 || btnOperand3 + btnOperand4 === btnOperand5 + btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 + btnOperand2 === newParam1 + newParam2 || btnOperand3 + btnOperand4 === newParam1 + newParam2 || btnOperand5 + btnOperand6 === newParam1 + newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = newParam1 + newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : btnOperand1 + btnOperand2
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : btnOperand3 + btnOperand4
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : btnOperand5 + btnOperand6
       } else if(RNG === 2) {
         newRandomSkill = '-'
+        while (btnOperand1 - btnOperand2 === btnOperand3 - btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 - btnOperand2 === btnOperand5 - btnOperand6 || btnOperand3 - btnOperand4 === btnOperand5 - btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 - btnOperand2 === btnOperand5 - btnOperand6 || btnOperand3 - btnOperand4 === btnOperand5 - btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 - btnOperand2 === newParam1 - newParam2 || btnOperand3 - btnOperand4 === newParam1 - newParam2 || btnOperand5 - btnOperand6 === newParam1 - newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = newParam1 - newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : btnOperand1 - btnOperand2
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : btnOperand3 - btnOperand4
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : btnOperand5 - btnOperand6
       } else if(RNG === 3) {
         newRandomSkill = '*'
+        while (btnOperand1 * btnOperand2 === btnOperand3 * btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 * btnOperand2 === btnOperand5 * btnOperand6 || btnOperand3 * btnOperand4 === btnOperand5 * btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 * btnOperand2 === btnOperand5 * btnOperand6 || btnOperand3 * btnOperand4 === btnOperand5 * btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 * btnOperand2 === newParam1 * newParam2 || btnOperand3 * btnOperand4 === newParam1 * newParam2 || btnOperand5 * btnOperand6 === newParam1 * newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = newParam1 * newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : btnOperand1 * btnOperand2
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : btnOperand3 * btnOperand4
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : btnOperand5 * btnOperand6
       } else if(RNG === 4) {
         newRandomSkill = '/'
+        while (btnOperand1 / btnOperand2 === btnOperand3 / btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 / btnOperand2 === btnOperand5 / btnOperand6 || btnOperand3 / btnOperand4 === btnOperand5 / btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 / btnOperand2 === btnOperand5 / btnOperand6 || btnOperand3 / btnOperand4 === btnOperand5 / btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 / btnOperand2 === newParam1 / newParam2 || btnOperand3 / btnOperand4 === newParam1 / newParam2 || btnOperand5 / btnOperand6 === newParam1 / newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = parseFloat((newParam1 / newParam2).toFixed(2))
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget :  parseFloat((btnOperand1 / btnOperand2).toFixed(2))
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget :  parseFloat((btnOperand3 / btnOperand4).toFixed(2))
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget :  parseFloat((btnOperand5 / btnOperand6).toFixed(2))
       }
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'additionner'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+    } else if(targetLimit && mathsTrainingState.skill === 'additionner'){
+        while (btnOperand1 + btnOperand2 === btnOperand3 + btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 + btnOperand2 === btnOperand5 + btnOperand6 || btnOperand3 + btnOperand4 === btnOperand5 + btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 + btnOperand2 === btnOperand5 + btnOperand6 || btnOperand3 + btnOperand4 === btnOperand5 + btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 + btnOperand2 === newParam1 + newParam2 || btnOperand3 + btnOperand4 === newParam1 + newParam2 || btnOperand5 + btnOperand6 === newParam1 + newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = newParam1 + newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) + Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'soustraire'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : btnOperand1 + btnOperand2
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : btnOperand3 + btnOperand4
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : btnOperand5 + btnOperand6
+    } else if(targetLimit && mathsTrainingState.skill === 'soustraire'){
+        while (btnOperand1 - btnOperand2 === btnOperand3 - btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 - btnOperand2 === btnOperand5 - btnOperand6 || btnOperand3 - btnOperand4 === btnOperand5 - btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 - btnOperand2 === btnOperand5 - btnOperand6 || btnOperand3 - btnOperand4 === btnOperand5 - btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 - btnOperand2 === newParam1 - newParam2 || btnOperand3 - btnOperand4 === newParam1 - newParam2 || btnOperand5 - btnOperand6 === newParam1 - newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = newParam1 - newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) - Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'multiplier'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : btnOperand1 - btnOperand2
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : btnOperand3 - btnOperand4
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : btnOperand5 - btnOperand6
+    } else if(targetLimit && mathsTrainingState.skill === 'multiplier'){
+        while (btnOperand1 * btnOperand2 === btnOperand3 * btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 * btnOperand2 === btnOperand5 * btnOperand6 || btnOperand3 * btnOperand4 === btnOperand5 * btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 * btnOperand2 === btnOperand5 * btnOperand6 || btnOperand3 * btnOperand4 === btnOperand5 * btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 * btnOperand2 === newParam1 * newParam2 || btnOperand3 * btnOperand4 === newParam1 * newParam2 || btnOperand5 * btnOperand6 === newParam1 * newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = newParam1 * newParam2
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : Math.floor(Math.random() *  mathsTrainingState.limit + 1) * Math.floor(Math.random() *  mathsTrainingState.limit + 1)
-    } else if(mathsTrainingState.limit && mathsTrainingState.skill === 'diviser'){
-        newParam1 = Math.floor(Math.random() * mathsTrainingState.limit + 1)
-        newParam2 = Math.floor(Math.random() *  mathsTrainingState.limit + 1)
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget : btnOperand1 * btnOperand2
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget : btnOperand3 * btnOperand4
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget : btnOperand5 * btnOperand6
+    } else if(targetLimit && mathsTrainingState.skill === 'diviser'){
+        while (btnOperand1 / btnOperand2 === btnOperand3 / btnOperand4) {
+          btnOperand3 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand4 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 / btnOperand2 === btnOperand5 / btnOperand6 || btnOperand3 / btnOperand4 === btnOperand5 / btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 / btnOperand2 === btnOperand5 / btnOperand6 || btnOperand3 / btnOperand4 === btnOperand5 / btnOperand6) {
+          btnOperand5 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+          btnOperand6 = targetLimit && Math.floor(Math.random() *  targetLimit + 1)
+        }
+        while (btnOperand1 / btnOperand2 === newParam1 / newParam2 || btnOperand3 / btnOperand4 === newParam1 / newParam2 || btnOperand5 / btnOperand6 === newParam1 / newParam2) {
+          newParam1 = Math.floor(Math.random() * targetLimit + 1)
+          newParam2 = Math.floor(Math.random() *  targetLimit + 1)
+        }
         newTarget = parseFloat((newParam1 / newParam2).toFixed(2))
-        newBtn1Txt = selectBtnToTarget === 1 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn2Txt = selectBtnToTarget === 2 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
-        newBtn3Txt = selectBtnToTarget === 3 ? newTarget :  parseFloat((Math.floor(Math.random() *  mathsTrainingState.limit + 1) / Math.floor(Math.random() *  mathsTrainingState.limit + 1)).toFixed(2))
+        newBtn1Txt = selectBtnToTarget === 1 ? newTarget :  parseFloat((btnOperand1 / btnOperand2).toFixed(2))
+        newBtn2Txt = selectBtnToTarget === 2 ? newTarget :  parseFloat((btnOperand3 / btnOperand4).toFixed(2))
+        newBtn3Txt = selectBtnToTarget === 3 ? newTarget :  parseFloat((btnOperand5 / btnOperand6).toFixed(2))
     }
     mathsTrainingDispatch({
         target: newTarget,
