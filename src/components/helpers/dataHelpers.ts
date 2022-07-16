@@ -1,9 +1,9 @@
-import { IButtonProps, ITrainingOptionsSettingsProps } from "./interfacesHelpers";
+import { IHomePageNavLinkProps, IButtonProps, ITrainingOptionsSettingsProps } from "./interfacesHelpers";
 
-export const skillList: Array<IButtonProps> = [{
+export const skillList: Array<IHomePageNavLinkProps> = [{
     to:'maths',
     title:'Mathématiques',
-    color:'bg-amber-400 border-amber-300',
+    css:'bg-amber-400 border-amber-300',
     func: () => {}
 // }, {
 //     to:'francais',

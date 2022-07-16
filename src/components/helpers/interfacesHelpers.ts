@@ -12,6 +12,16 @@ export interface IAuthContextProps extends IChildrenProps {
     signInWithFacebook?: () => Promise<UserCredential>,
     ifNewCreateUserInFirestoreDatabase: (cred : UserCredential) => Promise<void>,
 }
+export interface IMainContextProps extends IChildrenProps {
+    get mainContextState(): IMainContextStateProps;
+    get mainContextDispatch(): Dispatch<Partial<IMainContextStateProps>>;
+}
+
+export interface IMainContextStateProps {
+    get appTitleText(): string;
+    get displayTrainingTitle(): boolean;
+    get trainingSpanText(): string;
+}
 
 export interface IButtonProps {
     ref?: any
@@ -37,9 +47,10 @@ export interface ILoginProps {
 }
 
 export interface IHomePageNavLinkProps {
-    get to(): string | null
+    get to(): string
     get title(): string
     get css(): string
+    func?: (btnTxt: string) => void
 }
 
 export interface IMathsTrainingStateProps {

@@ -89,7 +89,7 @@ export function setMathsSpanMsg(mathsTrainingState: IMathsTrainingStateProps, ma
     const spanCss = mathsTrainingState.defaultSpanCss
     let newSpanTxt = mathsTrainingState.spanMessage
     if(status === -1){
-        if(newSpanTxt[0] === "Bravo" || newSpanTxt[0].includes("Raté") || newSpanTxt[0] === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt[0].includes("Combien font "))){
+        if(newSpanTxt[0].includes("Bravo") || newSpanTxt[0].includes("Raté") || newSpanTxt[0] === "Go !" || (mathsTrainingState.timeLeft !== null && newSpanTxt[0].includes("Combien font "))){
             let operator
             if(mathsTrainingState.skill === 'additionner'){
                 operator  = '+'
@@ -110,13 +110,13 @@ export function setMathsSpanMsg(mathsTrainingState: IMathsTrainingStateProps, ma
         }
     } else if(status === 0){
       mathsTrainingDispatch({
-            spanMessage: ['Raté, la bonne réponse était :',`${mathsTrainingState.target}`],
+            spanMessage: ["Raté, c'était ",`${mathsTrainingState.target}`],
             spanCss: `${spanCss} text-red-500 border-red-500`,
             questionsCounter: mathsTrainingState.questionsCounter + 1,
         })
     } else if(status === 1){
       mathsTrainingDispatch({
-            spanMessage: ['Bravo', ''],
+            spanMessage: ["Bravo, c'était ",`${mathsTrainingState.target}`],
             spanCss: `${spanCss} text-emerald-500 border-emerald-500`,
             questionsCounter: mathsTrainingState.questionsCounter + 1,
             goodAnswersCounter: mathsTrainingState.goodAnswersCounter + 1,
