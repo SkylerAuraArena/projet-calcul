@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react'
+import { FC, useRef, useLayoutEffect } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { UserCredential } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
@@ -12,15 +12,25 @@ const SigninWith: FC<ILoginProps> = ({withWhat, setAuthing}) => {
     const navigate = useNavigate()
     const btnRef = useRef<HTMLButtonElement>(null)
 
-    const cssBtn = 'flex justify-center w-[8.8rem] rounded px-9 py-4 border-2 border-ivory'
-    const cssBtnHover = 'transition-all hover:scale-110 cursor-pointer'
+    const cssBtn = 'flex justify-center w-[8.8rem] rounded px-9 py-4 border-2 border-ivory transition-all'
+    const cssBtnFadeOut = 'opacity-0'
+    const cssBtnFadeIn = 'opacity-100'
+    const cssBtnHover = 'transition'
     const cssBtnClicked = `bg-slate-400 cursor-not-allowed`
-    let btnCss = `${cssBtn} ${cssBtnHover}`
+    let btnCss = `${cssBtn} ${cssBtnHover} ${cssBtnFadeOut}`
 
     const imgLogo = {
         img: withWhat === "google" ? logoGoogle : logoFacebook,
         alt: `Logo de ${withWhat === "google" ? "logoGoogle" : logoFacebook}`,
     }
+
+    useLayoutEffect(() => {
+        setTimeout(() => {
+            if(null !== btnRef.current){
+                btnRef.current.className = `${cssBtn} ${cssBtnHover} ${cssBtnFadeIn}`
+            }
+        }, 25);
+    }, [])
 
     const handleClick = () => {
         setAuthing(true)

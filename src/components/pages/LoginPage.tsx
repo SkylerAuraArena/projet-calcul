@@ -1,6 +1,6 @@
 import { FC, useState, useLayoutEffect } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
-import { Loader } from '../parts/loader/Loader'
+import { Loader } from '../parts/loader/CircularLoader'
 import SigninWith from '../signAndLog/SigninWith'
 
 const LoginPage: FC = () => {
@@ -15,7 +15,7 @@ const LoginPage: FC = () => {
       return () => {
         setAuthing(false)
         setLoading(true)
-      };
+      }
     }, [])
 
     return (

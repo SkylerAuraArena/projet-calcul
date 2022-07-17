@@ -5,32 +5,25 @@ import AuthRoute from "../access/AuthRoute";
 import DisconnectedRoute from "../access/DisconnectedRoute";
 import Homepage from "../pages/Homepage";
 import LoginPage from "../pages/LoginPage";
-import ErrorPage from "../pages/ErrorPage";
-// import Friends from "../../pages/FriendsPage";
-// import LandingPage from "../../pages/LandingPage";
-// import ProfilePage from "../../pages/ProfilePage";
-// import SignAndLogPage from "../../pages/SignAndLogPage";
-// import Wishes from "../../pages/WishesPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import MathsPage from "../pages/MathsPage";
 
 const AppRoutes: FC = () => {
 
     const UnprotectedPages = (
         <>
             <Route index element={<LoginPage />} />
-            {/*
-            <Route path="login" element={<SignAndLogPage type="log" />} />
-            <Route path="signup" element={<SignAndLogPage type="sign" />} />
-            */}
         </>
     )
     const RestrictedAccessPages = (
         <>
             <Route path="accueil" element={<Homepage />} />
-            {/*
-            <Route path="friends" element={<Friends />} />
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="wishes" element={<Wishes />} />
-            */}
+            <Route path="maths" element={<MathsPage />} >
+                <Route path=":competence" element={<MathsPage />} />
+            </Route>
+            <Route path="francais" element={<Homepage />} />
+            <Route path="dactylo" element={<Homepage />} />
+            <Route path="langues" element={<Homepage />} />
         </>
     )
 
@@ -57,7 +50,7 @@ const AppRoutes: FC = () => {
                 >
                     {RestrictedAccessPages}
                 </Route>
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="*" element={<NotFoundPage />} />
             </Route>
         </Routes>
     )
