@@ -1,28 +1,30 @@
-import { ReactElement } from 'react';
-import Button from "../parts/Button"
+import { FC, useEffect } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
+import { useMainContext } from '../../contexts/MainContext'
+import { skillList } from '../helpers/dataHelpers'
+import Button from '../parts/Button'
+import HomePageNavLink from '../parts/navLink/HomePageNavLink'
 
-function Homepage(): ReactElement {
+const HomePage: FC = () => {
 
-    let nameList = [{
-        name:'Mathématiques',
-        color:'bg-yellow-500'
-    }, {
-        name:'Français',
-        color:'bg-blue-500'
-    }, {
-        name:'Dactylographie',
-        color:'bg-slate-500'
-    }, {
-        name:'Langues étrangères',
-        color:'bg-green-500'
-    }]
-    let buttonList = nameList.map(elt => <Button key={elt.name} title={elt.name} color={elt.color} />);
+    const { logout } = useAuth()
+    const { mainContextState, mainContextDispatch } = useMainContext()
+
+    let navLinksList = skillList.map(elt => <HomePageNavLink key={elt.title} to={elt.to} title={elt.title} css={elt.css} />)
+
+    useEffect(() => {
+        mainContextDispatch({
+            appTitleText: "Choisissez la matière",
+        })
+    }, [])
 
     return (
-        <div className='w-2/3 flexJIC flex-col gap-6 sm:w-5/12 md:w-4/12 lg:w-3/12'>
-            { buttonList }
+        <div className='h-full flexJIC flex-col gap-6 font-bold sm:gap-8'>
+            <span className='text-4xl mb-6 text-center sm:mb-4'>{mainContextState.appTitleText}</span>
+            { navLinksList }
+            <Button title="Déconnexion" color='bg-slate-400' func={logout} />
         </div>
     )
 }
 
-export default Homepage
+export default HomePage

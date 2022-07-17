@@ -7,9 +7,18 @@
 .flexJIC {
   @apply flex justify-center items-center;
 }
-/* .g-px {
-  @apply px-6;
-} */
+.btnBase {
+  @apply w-full p-4 border-2 rounded-2xl text-white text-center text-2xl font-medium hover:shadow-shadowBoxHover;
+}
+.btn {
+  @apply btnBase shadow-shadowBox;
+}
+.btnClicked {
+  @apply btnBase shadow-inner hover:shadow-inner;
+}
+.transition {
+  @apply transition-all hover:scale-110 cursor-pointer
+}
 
 /* *********************************************************************************************************** */
 
@@ -20,4 +29,5 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+    background-color: #eee;
 }
