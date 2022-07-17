@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useMemo, FC, useReducer } from "react"
+import { createContext, useContext, useMemo, FC, useReducer } from "react"
 import { IChildrenProps, IMainContextProps, IMainContextStateProps } from '../components/helpers/interfacesHelpers'
 
 const MainContext = createContext<IMainContextProps | null>(null)

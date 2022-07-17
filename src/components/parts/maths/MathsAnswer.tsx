@@ -6,7 +6,7 @@ import { IMathsAnswerProps } from "../../helpers/interfacesHelpers"
 import Button from "../Button"
 
 const schema = yup.object({
-    mathsAnswerInput: yup.number().required(),
+    mathsAnswerInput: yup.number().required("Il faut soumettre une réponse"),
 }).required()
 
 interface IFormValues {
@@ -42,12 +42,14 @@ const MathsAnswer: FC<IMathsAnswerProps> = (({ parentState, parentDispatch, setS
         <>
             {
                 parentState.mode === "clavier" && parentState.spanMessage[0] !== "Prêt ?" && <>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <input {...rest} name="mathsAnswerInput" id="mathsAnswerInput" placeholder="Votre réponse ?" ref={(e) => {
+                    <form className="w-full flexJIC flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+                        <input role="presentation" autoComplete="off" {...rest} name="mathsAnswerInput" id="mathsAnswerInput" placeholder="Votre réponse ?" className="w-full p-4 text-2xl rounded-3xl outline-none shadow-xl font-semibold text-neutral-400" ref={(e) => {
                             ref(e) 
                             mathsAnwserInputRef.current = e 
                         }} />
-                        <p>{errors.mathsAnswerInput?.message}</p>
+                        <span className="w-full flex justify-start items-center">
+                            <p className="w-full ml-4 text-2xl text-red-500">{errors.mathsAnswerInput && "Votre réponse doit être un nombre."}</p>
+                        </span>
                     </form>
                 </>
             }

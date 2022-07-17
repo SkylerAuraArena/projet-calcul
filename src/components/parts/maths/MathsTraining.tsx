@@ -160,7 +160,9 @@ const MathsTraining: FC = () => {
             mathsTrainingState.limit && mathsTrainingState.timer && mathsTrainingState.displayTimer && mathsTrainingState.startTimer && mathsTrainingState.spanMessage[0].includes("Combien font ") && <MathsAnswer parentState={mathsTrainingState} parentDispatch={mathsTrainingDispatch} setSpanMsg={setMathsSpanMsg} />
           }
           {
-            mathsTrainingState.timeLeft === 0 && <span className={`${spanCss} ${trainingOptionsSettingsList[0].css}`}>{`Voici votre score : ${mathsTrainingState.goodAnswersCounter} bonnes réponses sur ${mathsTrainingState.questionsCounter} questions (${Math.round((mathsTrainingState.goodAnswersCounter * 100 / mathsTrainingState.questionsCounter + Number.EPSILON) * 100) / 100}%)`}</span>
+            mathsTrainingState.timeLeft === 0 && <span className={`${spanCss} ${trainingOptionsSettingsList[0].css}`}>{`Voici votre score : ${mathsTrainingState.goodAnswersCounter} bonnes réponses sur ${mathsTrainingState.questionsCounter} questions (${
+              isNaN(Math.round((mathsTrainingState.goodAnswersCounter * 100 / mathsTrainingState.questionsCounter + Number.EPSILON) * 100) / 100) ? 0 : Math.round((mathsTrainingState.goodAnswersCounter * 100 / mathsTrainingState.questionsCounter + Number.EPSILON) * 100) / 100
+            }%)`}</span>
           }
         </div>
       }

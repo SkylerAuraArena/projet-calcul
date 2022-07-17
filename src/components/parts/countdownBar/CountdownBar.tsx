@@ -12,6 +12,11 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
     const [maxTime, setMaxTime] = useState<Array<string>>(['', '', ''])
     const [timeLeft, setTimeLeft] = useState<Array<string>>(['', '', ''])
 
+    function updateProgress() {
+        const timeLeftString = `${(time * 100 / timer).toString()}%`
+        timerBarRef.current?.setAttribute("aria-valuenow", timeLeftString)
+    }
+
     function countdownTimeStart(){
             var timeLeft = time * 1000
             var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
@@ -76,6 +81,7 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
 
             setTime(time => time - 1)
             countdownTimeStart()
+            updateProgress()
             if(time <= 10){
                 if(hoursTextRef.current){
                     hoursTextRef.current.className = `text-red-500`
@@ -108,9 +114,16 @@ export const CountdownBar: FC<ICountdownBarProps> = ({timer, startTimer, dispatc
         countDown()
     }, [time,startTimer])
 
+    useEffect(() => {
+        timerBarRef.current?.setAttribute("role", "progressbar")
+        timerBarRef.current?.setAttribute("aria-valuemin", "0")
+        timerBarRef.current?.setAttribute("aria-valuemax", "100")
+    }, [])
+    
+
     return (
         <div id={countdownBar.timebar} className="relative w-full h-14 p-2 border-2 rounded-2xl shadow-countdownBarShadowBox">
-            <div ref={timerBarRef} id={countdownBar.timebarFill} className="w-full h-full rounded-xl">
+            <div role="progressbar" ref={timerBarRef} id={countdownBar.timebarFill} className="w-full h-full rounded-xl">
             </div>
             <div className='w-full flexJIC absolute left-[0%] top-[18.5%] text-white text-center text-2xl font-bold'>
                 {
